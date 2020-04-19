@@ -7,8 +7,8 @@ using UnityEngine.Events;
 public class PlayerInput : MonoBehaviour {
     private CharacterController2D controller;
 
-    private BufferedButton jump;
-    private BufferedButton crouch;
+    [HideInInspector] public BufferedButton jump;
+    [HideInInspector] public BufferedButton crouch;
 
     private void Start () {
         jump = new BufferedButton("Jump");

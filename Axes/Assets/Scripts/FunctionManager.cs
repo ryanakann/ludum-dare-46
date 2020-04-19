@@ -4,18 +4,18 @@ using UnityEngine;
 
 public enum Axis {
     //Independent
-    PlayerXPosition,
-    PlayerYPosition,
-    PlayerXInput,
-    PlayerYInput,
-    PlayerRotation,
-    PlayerAvgScale,
-    PlayerDistanceToTarget,
-    PlayerDistanceTravelled,
-    PlayerJumpCount,
-    PlayerGrounded,
+    XPosition,
+    YPosition,
+    XInput,
+    YInput,
+    Rotation,
+    Scale,
+    Distance,
+    DistanceTravelled,
+    JumpCount,
+    Grounded,
 
-    LevelTimeElapsed,
+    TimeElapsed,
 
     GameVolume,
     GameQuality,
@@ -23,14 +23,13 @@ public enum Axis {
 
 
     //Dependent
-    PlayerScale,
-    PlayerMass,
-    PlayerFriction,
-    PlayerBounciness,
-    PlayerSpeed,
-    PlayerJumpHeight,
-    PlayerVisibility,
-    PlayerInputDelay,
+    Mass,
+    Friction,
+    Bounciness,
+    Speed,
+    JumpHeight,
+    Visibility,
+    InputDelay,
 
     AIReactionTime,
 
@@ -49,15 +48,18 @@ public enum Axis {
 public class FunctionManager : MonoBehaviour {
     public Axis x;
     public Axis y;
-    public GameObject player;
-    public GameObject target;
+    public GameObject xTarget;
+    public GameObject yTarget;
     public Vector2 xRange;
     public Vector2 yRange;
     public AnimationCurve function;
 
     private void Start () {
-        if (player == null) {
-            player = GameObject.FindWithTag("Player");
+        if (xTarget == null) {
+            xTarget = GameObject.FindWithTag("Player");
+        }
+        if (yTarget == null) {
+            yTarget = GameObject.FindWithTag("Player");
         }
     }
 
@@ -67,178 +69,150 @@ public class FunctionManager : MonoBehaviour {
 
     private float GetVar (Axis x) {
         switch (x) {
-            case Axis.PlayerXPosition:
-                return player.transform.position.x;
-            case Axis.PlayerYPosition:
-                return player.transform.position.y;
-            case Axis.PlayerXInput:
+            case Axis.XPosition:
+                return xTarget.transform.position.x;
+            case Axis.YPosition:
+                return xTarget.transform.position.y;
+            case Axis.XInput:
                 return Input.GetAxis("Horizontal");
-            case Axis.PlayerYInput:
+            case Axis.YInput:
                 return Input.GetAxis("Vertical");
-            case Axis.PlayerRotation:
-                return player.transform.eulerAngles.z;
-            case Axis.PlayerAvgScale:
-                return (player.transform.localScale.x + player.transform.localScale.y) / 2f;
-            case Axis.PlayerDistanceToTarget:
-                return Vector3.Distance(player.transform.position, target.transform.position);
-            case Axis.PlayerDistanceTravelled:
-                //TODO
-                break;
-            case Axis.PlayerJumpCount:
-                //TODO
-                break;
-            case Axis.PlayerGrounded:
-                break;
-            case Axis.LevelTimeElapsed:
-                break;
+            case Axis.Rotation:
+                return xTarget.transform.eulerAngles.z;
+            case Axis.Scale:
+                return  (xTarget.transform.localScale.x + xTarget.transform.localScale.y) / 2f;
+            case Axis.Distance:
+                return (xTarget.transform.position - yTarget.transform.position).magnitude;
+            case Axis.DistanceTravelled:
+                return (xTarget.GetComponent<Entity>() ? xTarget.GetComponent<Entity>().distanceTravelled : 0f);
+            case Axis.JumpCount:
+                return (xTarget.GetComponent<CharacterController2D>() ? xTarget.GetComponent<CharacterController2D>().jumpCount : 0);
+            case Axis.Grounded:
+                return (xTarget.GetComponent<Entity>() ? (xTarget.GetComponent<Entity>().grounded ? 1f : 0f) : 0f);
+            case Axis.TimeElapsed:
+                return (xTarget.GetComponent<Entity>() ? xTarget.GetComponent<Entity>().timeAlive : Time.time);
             case Axis.GameVolume:
-                break;
+                return 1f;
             case Axis.GameQuality:
-                break;
+                return 1f;
             case Axis.GameTimeElapsed:
                 return Time.time;
-            case Axis.PlayerScale:
-                return (player.transform.localScale.x + player.transform.localScale.y) / 2f;
-            case Axis.PlayerMass:
-                return (player.GetComponent<Rigidbody2D>() != null ? player.GetComponent<Rigidbody2D>().mass : 1f);
-            case Axis.PlayerFriction:
-                return (player.GetComponent<Rigidbody2D>() != null ? player.GetComponent<Rigidbody2D>().sharedMaterial.friction : 0.2f);
-            case Axis.PlayerBounciness:
-                return (player.GetComponent<Rigidbody2D>() != null ? player.GetComponent<Rigidbody2D>().sharedMaterial.bounciness : 0f);
-            case Axis.PlayerSpeed:
-                return (player.GetComponent<Rigidbody2D>() != null ? player.GetComponent<Rigidbody2D>().velocity.magnitude : 1f);
-            case Axis.PlayerJumpHeight:
-                //TODO
-                print("Error: PlayerJumpHeight reading not yet implemented.");
-                break;
-            case Axis.PlayerVisibility:
-                return (player.GetComponent<SpriteRenderer>() != null ? player.GetComponent<SpriteRenderer>().color.a : 1f);
-            case Axis.PlayerInputDelay:
-                //TODO
-                print("Error: PlayerInputDelay reading not yet implemented.");
-                break;
+            case Axis.Mass:
+                return (xTarget.GetComponent<Rigidbody2D>() ? xTarget.GetComponent<Rigidbody2D>().mass : 1f);
+            case Axis.Friction:
+                return (xTarget.GetComponent<Rigidbody2D>() ? xTarget.GetComponent<Rigidbody2D>().sharedMaterial.friction : 0.2f);
+            case Axis.Bounciness:
+                return (xTarget.GetComponent<Rigidbody2D>() ? xTarget.GetComponent<Rigidbody2D>().sharedMaterial.bounciness : 0f);
+            case Axis.Speed:
+                return (xTarget.GetComponent<Rigidbody2D>() ? xTarget.GetComponent<Rigidbody2D>().velocity.magnitude : 0f);
+            case Axis.JumpHeight:
+                return (xTarget.GetComponent<CharacterController2D>() ? xTarget.GetComponent<CharacterController2D>().jumpForce : 1f);
+            case Axis.Visibility:
+                return (xTarget.GetComponent<SpriteRenderer>() ? xTarget.GetComponent<SpriteRenderer>().color.a : 1f);
+            case Axis.InputDelay:
+                return 0f;
             case Axis.AIReactionTime:
-                //TODO
-                print("Error: AIReactionTime reading not yet implemented.");
-                break;
-            case Axis.CameraRotation:
-                return Camera.main.transform.rotation.z;
-            case Axis.CameraDeepFryValue:
-                //TODO
-                break;
-            case Axis.CameraZoom:
-                return Camera.main.orthographicSize;
+                return 0.2f;
             case Axis.GameTimeScale:
                 return Time.timeScale;
             case Axis.GameFrameRate:
-                //TODO
-                print("Error: GameFrameRate reading not yet implemented.");
-                break;
+                return 1f / Time.deltaTime;
             case Axis.GameGravityRotation:
-                Vector2 gravVec = Physics2D.gravity;
-                return Mathf.Atan2(gravVec.y, gravVec.x);
+                return Mathf.Atan2(Physics2D.gravity.y, Physics2D.gravity.x);
             case Axis.GameGravityScale:
-                return Physics2D.gravity.magnitude;
+                return Physics.gravity.magnitude;
             case Axis.GameMusicPitch:
-                //TODO
-                print("Error: GameMusicPitch reading not yet implemented.");
-                break;
+                return 1f;
             case Axis.GameVisibility:
-                //TODO
-                print("Error: GameVisiblilty reading not yet implemented.");
-                break;
+                return 1f;
+            default:
+                return 0f;
         }
-        return 1f;
     }
 
     private void SetVar (Axis y, float val) {
         switch (y) {
-            case Axis.PlayerXPosition:
-                player.transform.position = new Vector3(val, player.transform.position.y, player.transform.position.z);
+            case Axis.XPosition:
+                xTarget.transform.position = new Vector3(val, xTarget.transform.position.y, xTarget.transform.position.z);
                 break;
-            case Axis.PlayerYPosition:
-                player.transform.position = new Vector3(player.transform.position.x, val, player.transform.position.z);
+            case Axis.YPosition:
+                xTarget.transform.position = new Vector3(xTarget.transform.position.x, val, xTarget.transform.position.z);
                 break;
-            case Axis.PlayerXInput:
+            case Axis.XInput:
                 print("Error: PlayerXInput is not writeable");
                 break;
-            case Axis.PlayerYInput:
+            case Axis.YInput:
                 print("Error: PlayerXInput is not writeable");
                 break;
-            case Axis.PlayerRotation:
-                player.transform.eulerAngles = Vector3.forward * val;
+            case Axis.Rotation:
+                xTarget.transform.eulerAngles = Vector3.forward * val;
                 break;
-            case Axis.PlayerAvgScale:
-                print("Error: PlayerAvgScale is not writeable");
+            case Axis.Scale:
+                print("Error: Scale is not writeable");
                 break;
-            case Axis.PlayerDistanceToTarget:
-                print("Error: PlayerDistanceToTarget is not writeable");
+            case Axis.Distance:
+                print("Error: Distance is not writeable");
                 break;
-            case Axis.PlayerDistanceTravelled:
-                print("Error: PlayerDistanceTravelled is not writeable");
+            case Axis.DistanceTravelled:
+                print("Error: DistanceTravelled is not writeable");
                 break;
-            case Axis.PlayerJumpCount:
-                print("Error: PlayerJumpCount is not writeable");
+            case Axis.JumpCount:
+                print("Error: JumpCount is not writeable");
                 break;
-            case Axis.PlayerGrounded:
-                print("Error: PlayerGrounded is not writeable");
+            case Axis.Grounded:
+                print("Error: Grounded is not writeable");
 
                 break;
-            case Axis.LevelTimeElapsed:
-                print("Error: LevelTimeElapsed is not writeable");
+            case Axis.TimeElapsed:
+                print("Error: TimeElapsed is not writeable");
                 break;
             case Axis.GameVolume:
+                print("Error: TimeElapsed not yet implemented");
                 break;
             case Axis.GameQuality:
+                print("Error: GameQuality not yet implemented");
+
                 break;
             case Axis.GameTimeElapsed:
-                print("Error: LevelTimeElapsed is not writeable");
+                print("Error: GameTimeElapsed is not writeable");
                 break;
-            case Axis.PlayerScale:
-                player.transform.localScale = Vector3.one * val;
-                break;
-            case Axis.PlayerMass:
-                if (player.GetComponent<Rigidbody2D>()) {
-                    player.GetComponent<Rigidbody2D>().mass = val;
+            case Axis.Mass:
+                if (xTarget.GetComponent<Rigidbody2D>()) {
+                    xTarget.GetComponent<Rigidbody2D>().mass = val;
                 }
                 break;
-            case Axis.PlayerFriction:
-                if (player.GetComponent<Rigidbody2D>()) {
-                    player.GetComponent<Rigidbody2D>().sharedMaterial.friction = val;
+            case Axis.Friction:
+                if (xTarget.GetComponent<Rigidbody2D>()) {
+                    xTarget.GetComponent<Rigidbody2D>().sharedMaterial.friction = val;
                 }
                 break;
-            case Axis.PlayerBounciness:
-                if (player.GetComponent<Rigidbody2D>()) {
-                    player.GetComponent<Rigidbody2D>().sharedMaterial.bounciness = val;
+            case Axis.Bounciness:
+                if (xTarget.GetComponent<Rigidbody2D>()) {
+                    xTarget.GetComponent<Rigidbody2D>().sharedMaterial.bounciness = val;
                 }
                 break;
-            case Axis.PlayerSpeed:
-                print("Error: PlayerSpeed writing not yet implemented.");
+            case Axis.Speed:
+                if (xTarget.GetComponent<CharacterController2D>()) {
+                    xTarget.GetComponent<CharacterController2D>().speed = val;
+                }
                 break;
-            case Axis.PlayerJumpHeight:
-                print("Error: PlayerJumpHeight writing not yet implemented.");
+            case Axis.JumpHeight:
+                if (xTarget.GetComponent<CharacterController2D>()) {
+                    xTarget.GetComponent<CharacterController2D>().jumpForce = val;
+                }
                 break;
-            case Axis.PlayerVisibility:
-                if (player.GetComponent<SpriteRenderer>()) {
-                    Color c = player.GetComponent<SpriteRenderer>().color;
+            case Axis.Visibility:
+                if (xTarget.GetComponent<SpriteRenderer>()) {
+                    Color c = xTarget.GetComponent<SpriteRenderer>().color;
                     c.a = val;
-                    player.GetComponent<SpriteRenderer>().color = c;
+                    xTarget.GetComponent<SpriteRenderer>().color = c;
                 }
                 break;
-            case Axis.PlayerInputDelay:
+            case Axis.InputDelay:
                 print("Error: PlayerInputDelay writing not yet implemented.");
                 break;
             case Axis.AIReactionTime:
                 print("Error: AIReactionTime writing not yet implemented.");
-                break;
-            case Axis.CameraRotation:
-                Camera.main.transform.eulerAngles = Vector3.forward * val;
-                break;
-            case Axis.CameraDeepFryValue:
-                print("Error: CameraDeepFryValue writing not yet implemented.");
-                break;
-            case Axis.CameraZoom:
-                Camera.main.orthographicSize = val;
                 break;
             case Axis.GameTimeScale:
                 Time.timeScale = val;

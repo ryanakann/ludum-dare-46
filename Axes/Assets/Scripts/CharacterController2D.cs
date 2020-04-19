@@ -2,10 +2,10 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class CharacterController2D : MonoBehaviour
+public class CharacterController2D : Entity
 {
-	[SerializeField] private float m_JumpForce = 400f;                          // Amount of force added when the player jumps.
-	[SerializeField] private float speed = 2f;
+	[SerializeField] public float jumpForce = 400f;                          // Amount of force added when the player jumps.
+	[SerializeField] public float speed = 2f;
 
 	[Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;			// Amount of maxSpeed applied to crouching movement. 1 = 100%
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
@@ -16,7 +16,6 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] private Collider2D crouchDisableCollider;				// A collider that will be disabled when crouching
 
 	const float groundedRadius = .3f; // Radius of the overlap circle to determine if grounded
-	private bool grounded;            // Whether or not the player is grounded.
 	const float ceilingRadius = .3f; // Radius of the overlap circle to determine if the player can stand up
 	private Rigidbody2D rb;
 	private bool facingRight = true;  // For determining which way the player is currently facing.
@@ -27,6 +26,8 @@ public class CharacterController2D : MonoBehaviour
 	private Vector2 gravityLF;
 	private Vector3 right;
 	private Vector3 targetVelocity;
+
+	[HideInInspector] public int jumpCount;
 
 	[Header("Events")]
 	[Space]
@@ -39,16 +40,19 @@ public class CharacterController2D : MonoBehaviour
 	public BoolEvent OnCrouchEvent;
 	private bool groundedLF = false;
 
-	private void Awake() {
+	protected override void Awake() {
+		base.Awake();
 		rb = GetComponent<Rigidbody2D>();
 		gravity = Physics2D.gravity;
 		gravityLF = gravity;
 		if (OnLandEvent == null)OnLandEvent = new UnityEvent();
 
 		if (OnCrouchEvent == null) OnCrouchEvent = new BoolEvent();
+
+		jumpCount = 0;
 	}
 
-	private void FixedUpdate() {
+	protected override void FixedUpdate() {
 		bool wasGrounded = grounded;
 		grounded = false;
 
@@ -160,12 +164,12 @@ public class CharacterController2D : MonoBehaviour
 		//JUMP CONTROL
 		/******************************************************************/
 		if (grounded && jump) {
-			// Add a vertical force to the player.
 			grounded = false;
 
 			velocity = right * move * speed; // Zero out jump velocity
-			velocity -= (Vector3)gravity * m_JumpForce;
-			//m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+			velocity -= (Vector3)gravity * jumpForce;
+			
+			jumpCount++;
 		}
 
 		rb.velocity = velocity;
