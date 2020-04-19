@@ -55,12 +55,14 @@ public class FunctionManager : MonoBehaviour {
     public Vector2 yRange;
     public AnimationCurve function;
 
-    private void Update () {
-        HandleFunction(x, y);
+    private void Start () {
+        if (player == null) {
+            player = GameObject.FindWithTag("Player");
+        }
     }
 
-    private void GetValue () {
-
+    private void Update () {
+        HandleFunction(x, y);
     }
 
     private float GetVar (Axis x) {
@@ -261,6 +263,10 @@ public class FunctionManager : MonoBehaviour {
     }
 
     private void HandleFunction (Axis x, Axis y) {
-
+        float xi = GetVar(x);
+        float xNorm = Mathf.InverseLerp(xRange.x, xRange.y, xi);
+        float yNorm = function.Evaluate(xNorm);
+        float yi = Mathf.Lerp(yRange.x, yRange.y, yNorm);
+        SetVar(y, yi);
     }
 }

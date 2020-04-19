@@ -130,7 +130,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 283941462}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 446748628}
   - component: {fileID: 446748627}
   - component: {fileID: 446748629}
+  - component: {fileID: 446748631}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -7069,6 +7070,27 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+--- !u!50 &446748631
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446748625}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &515319532
 GameObject:
   m_ObjectHideFlags: 0
@@ -7081,7 +7103,7 @@ GameObject:
   - component: {fileID: 515319536}
   - component: {fileID: 515319535}
   - component: {fileID: 515319534}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Mountains (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7247,15 +7269,15 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 40
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1537
+    m_Bits: 257
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -7275,7 +7297,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1740004, y: 0.93999994, z: -10}
+  m_LocalPosition: {x: -10.17, y: -0.06, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7293,7 +7315,7 @@ GameObject:
   - component: {fileID: 530188147}
   - component: {fileID: 530188146}
   - component: {fileID: 530188145}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Mountains (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7388,7 +7410,7 @@ GameObject:
   - component: {fileID: 661289759}
   - component: {fileID: 661289758}
   - component: {fileID: 661289761}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Clouds (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7497,7 +7519,7 @@ GameObject:
   - component: {fileID: 732935849}
   - component: {fileID: 732935848}
   - component: {fileID: 732935847}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Mountains (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7592,7 +7614,7 @@ GameObject:
   - component: {fileID: 890869921}
   - component: {fileID: 890869920}
   - component: {fileID: 890869923}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Clouds (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7742,7 +7764,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1055007140}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Effects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7803,10 +7825,10 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 1209737968}
   m_Lens:
-    FieldOfView: 60
-    OrthographicSize: 5
-    NearClipPlane: 0.3
-    FarClipPlane: 1000
+    FieldOfView: 40
+    OrthographicSize: 10
+    NearClipPlane: 0.1
+    FarClipPlane: 5000
     Dutch: 0
     LensShift: {x: 0, y: 0}
   m_Transitions:
@@ -7825,7 +7847,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1103705881}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1740004, y: 0.93999994, z: -10}
+  m_LocalPosition: {x: -10.17, y: -0.06, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1483410236}
@@ -7844,6 +7866,79 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8a05de0ac134f4f9d01bef6b9da077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1142672406
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1142672408}
+  - component: {fileID: 1142672407}
+  m_Layer: 0
+  m_Name: FunctionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1142672407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142672406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 327110c6ae4a2214b956470d44a1956e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x: 0
+  y: 14
+  player: {fileID: 1209737966}
+  target: {fileID: 0}
+  xRange: {x: -10, y: 80}
+  yRange: {x: 1.5, y: 20}
+  function:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &1142672408
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142672406}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1209737966
 GameObject:
   m_ObjectHideFlags: 0
@@ -7859,9 +7954,9 @@ GameObject:
   - component: {fileID: 1209737975}
   - component: {fileID: 1209737973}
   - component: {fileID: 1209737971}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Wizard
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7902,8 +7997,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 268428421
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a7a3c7b1111fe1f4581ae08b6139e1fd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -7924,7 +8019,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209737966}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.174, y: -0.06, z: 0}
+  m_LocalPosition: {x: -10.17, y: -0.06, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 1055007140}
@@ -7956,7 +8051,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.27265376, y: 0.64235497}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.1
 --- !u!95 &1209737970
 Animator:
   serializedVersion: 3
@@ -8044,7 +8139,7 @@ GameObject:
   - component: {fileID: 1420272683}
   - component: {fileID: 1420272682}
   - component: {fileID: 1420272681}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Background Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8100,7 +8195,7 @@ Camera:
   m_Depth: -100
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 512
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -8190,23 +8285,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad980451443d70438faac0bc6c235a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LookaheadTime: 0.4
-  m_LookaheadSmoothing: 15
-  m_LookaheadIgnoreY: 1
+  m_LookaheadTime: 0
+  m_LookaheadSmoothing: 10
+  m_LookaheadIgnoreY: 0
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
   m_ScreenX: 0.5
-  m_ScreenY: 0.6
+  m_ScreenY: 0.5
   m_CameraDistance: 10
-  m_DeadZoneWidth: 0.2
-  m_DeadZoneHeight: 0.2
+  m_DeadZoneWidth: 0
+  m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
   m_SoftZoneWidth: 0.8
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
-  m_BiasY: -0.15000005
+  m_BiasY: 0
   m_CenterOnActivate: 1
   m_GroupFramingMode: 2
   m_AdjustmentMode: 0
@@ -8231,7 +8326,7 @@ GameObject:
   - component: {fileID: 1860398875}
   - component: {fileID: 1860398874}
   - component: {fileID: 1860398873}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Mountains (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8325,7 +8420,7 @@ GameObject:
   - component: {fileID: 1902624247}
   - component: {fileID: 1902624246}
   - component: {fileID: 1902624245}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Mountains (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8419,7 +8514,7 @@ GameObject:
   - component: {fileID: 1998544094}
   - component: {fileID: 1998544093}
   - component: {fileID: 1998544092}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Mountains (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
