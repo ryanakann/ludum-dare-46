@@ -61,7 +61,7 @@ public class FunctionManager : MonoBehaviour {
         }
     }
 
-    private void Update () {
+    private void LateUpdate () {
         HandleFunction(x, y);
     }
 
