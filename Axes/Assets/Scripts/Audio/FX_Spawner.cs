@@ -6,11 +6,7 @@ using UnityEngine.Audio;
 public enum FXType
 {
     Default,
-    BASIC_LOOT_PICKUP,
-    DRAGON_FLAME,
-    DIE,
-    EXCLAMATION,
-    FOOTSTEP,
+    PLATFORM_BREAK,
 }
 
 public class FX_Spawner : MonoBehaviour
