@@ -103,7 +103,7 @@ public class FunctionManager : MonoBehaviour {
             case Axis.Rotation:
                 return (xTarget.GetComponent<Cinemachine.CinemachineVirtualCamera>() ? xTarget.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.Dutch : xTarget.transform.eulerAngles.z);
             case Axis.Scale:
-                return  (xTarget.transform.localScale.x + xTarget.transform.localScale.y) / 2f;
+                return  (Mathf.Abs(xTarget.transform.localScale.x) + Mathf.Abs(xTarget.transform.localScale.y)) / 2f;
             case Axis.Distance:
                 return (xTarget.transform.position - yTarget.transform.position).magnitude;
             case Axis.DistanceTravelled:
@@ -184,6 +184,7 @@ public class FunctionManager : MonoBehaviour {
                 break;
             case Axis.Scale:
                 if (yTarget.GetComponent<Cinemachine.CinemachineVirtualCamera>()) {
+                    print("Val: " + val);
                     yTarget.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize = val;
                 } else {
                     Vector3 ratio = yTarget.transform.localScale.normalized;
