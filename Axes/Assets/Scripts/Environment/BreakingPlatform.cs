@@ -8,6 +8,7 @@ public class BreakingPlatform : MonoBehaviour
     Collider2D coll;
     ParticleSystem debris;
     SpriteRenderer sr;
+    bool broken;
 
     void Start()
     {
@@ -29,6 +30,8 @@ public class BreakingPlatform : MonoBehaviour
 
     void Break()
     {
+        if (broken) return;
+        broken = true;
         coll.enabled = false;
         sr.enabled = false;
         debris.Play();
