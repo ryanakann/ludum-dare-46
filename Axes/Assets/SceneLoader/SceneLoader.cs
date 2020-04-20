@@ -24,6 +24,11 @@ public class SceneLoader : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void LoadNextScene () {
+        int index = SceneManager.GetActiveScene().buildIndex + 1;
+        LoadScene(SceneManager.GetSceneAt(index).name);
+    }
+
     public void LoadScene(string scene_name)
     {
         if (loading)
