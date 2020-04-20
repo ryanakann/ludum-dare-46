@@ -671,7 +671,7 @@ PrefabInstance:
     - target: {fileID: 6425493785078889595, guid: ff3ac0bf50202f440b1fea0fd87919ec,
         type: 3}
       propertyPath: xRange.y
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6425493785078889595, guid: ff3ac0bf50202f440b1fea0fd87919ec,
         type: 3}
@@ -777,6 +777,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: -2.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425493785205248295, guid: ff3ac0bf50202f440b1fea0fd87919ec,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425493785205248295, guid: ff3ac0bf50202f440b1fea0fd87919ec,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6425493785619734635, guid: ff3ac0bf50202f440b1fea0fd87919ec,
         type: 3}
