@@ -121,7 +121,7 @@ public class Interactor : MonoBehaviour
         {
             foreach (Transform t in potential_interactables)
             {
-                if (t.GetComponent<Door>() && t.GetComponent<Door>().Open())
+                if (t.GetComponent<Door>() && t.GetComponent<Door>().UseKey())
                 {
                     Drop();
                     Destroy(key.gameObject);
