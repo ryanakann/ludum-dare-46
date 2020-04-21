@@ -6,6 +6,10 @@
 Shader "TextMeshPro/Mobile/Distance Field" {
 
 Properties {
+
+	_NoiseScale("Noise Scale", float) = 1
+	_NoiseFrequency("Noise Frequency", float) = 0.2
+
 	_FaceColor			("Face Color", Color) = (1,1,1,1)
 	_FaceDilate			("Face Dilate", Range(-1,1)) = 0
 
@@ -115,7 +119,6 @@ SubShader {
 			half2	underlayParam	: TEXCOORD4;			// Scale(x), Bias(y)
 			#endif
 		};
-
 
 		pixel_t VertShader(vertex_t input)
 		{

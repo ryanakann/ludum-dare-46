@@ -27,6 +27,8 @@ public class CharacterController2D : Entity
 	private Vector3 right;
 	private Vector3 targetVelocity;
 
+	private Animator anim;
+
 	[HideInInspector] public int jumpCount;
 
 	[Header("Events")]
@@ -50,6 +52,8 @@ public class CharacterController2D : Entity
 		if (OnCrouchEvent == null) OnCrouchEvent = new BoolEvent();
 
 		jumpCount = 0;
+
+		anim = GetComponent<Animator>();
 	}
 
 	protected override void FixedUpdate() {
@@ -65,10 +69,12 @@ public class CharacterController2D : Entity
 				if (!wasGrounded) OnLandEvent.Invoke();
 			}
 		}
+		anim.SetBool("grounded", grounded);
 	}
 
 
 	public void Move(float move, bool crouch, bool jump, bool jumpStay) {
+		anim.SetFloat("x", move);
 		velocity = rb.velocity;
 
 		//CHECK CROUCH
@@ -148,6 +154,8 @@ public class CharacterController2D : Entity
 			// And then smoothing it out and applying it to the character
 			velocity = Vector3.SmoothDamp(velocity, targetVelocity, ref velocity, m_MovementSmoothing);
 
+			anim.SetFloat("speed", Vector3.Project(velocity, transform.right).magnitude);
+
 			// If the input is moving the player right and the player is facing left...
 			if (move > 0 && !facingRight) {
 				// ... flip the player.
@@ -170,9 +178,15 @@ public class CharacterController2D : Entity
 			velocity -= (Vector3)gravity * jumpForce;
 			
 			jumpCount++;
+
+			anim.SetTrigger("jump");
 		}
 
 		rb.velocity = velocity;
+	}
+
+	public void Die () {
+		anim.SetTrigger("hurt");
 	}
 
 

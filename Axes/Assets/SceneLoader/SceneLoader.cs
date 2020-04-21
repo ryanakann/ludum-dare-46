@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum SceneTransition {
+    Fade,
+}
+
 [RequireComponent(typeof(Animator))]
 public class SceneLoader : MonoBehaviour
 {
@@ -24,32 +28,25 @@ public class SceneLoader : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void LoadNextScene () {
-        int index = SceneManager.GetActiveScene().buildIndex + 1;
-        LoadScene(SceneManager.GetSceneAt(index).name);
+    public static void LoadScene(int buildIndex, SceneTransition transition = SceneTransition.Fade) {
+        if (Instance.loading) return;
+
+        Instance.StartCoroutine(Instance.LoadSceneAsync(buildIndex, transition));
     }
 
-    public void LoadScene(string scene_name)
-    {
-        if (loading)
-            return;
-        StartCoroutine(LoadSceneAsync(scene_name));
-    }
-
-    public IEnumerator LoadSceneAsync(string scene_name)
-    {
-        anim.SetBool("StartLoad", true);
+    private IEnumerator LoadSceneAsync(int buildIndex, SceneTransition transition) {
         loading = true;
+        anim.SetInteger("Transition", (int)transition);
+        anim.SetTrigger("Out");
+        
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
 
-        yield return new WaitForSeconds(3f);
-
-        AsyncOperation async = SceneManager.LoadSceneAsync(scene_name);
-
+        AsyncOperation async = SceneManager.LoadSceneAsync(buildIndex);
         while (!async.isDone)
         {
             yield return null;
         }
-        anim.SetBool("StartLoad", false);
+        anim.SetTrigger("In");
         loading = false;
     }
 }

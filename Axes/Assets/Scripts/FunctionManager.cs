@@ -5,13 +5,18 @@ using UnityEngine;
 public enum Axis {
     //Independent
     XPosition,
+    XLocalPosition,
     YPosition,
+    YLocalPosition,
     XInput,
     YInput,
     Rotation,
     Scale,
     Distance,
+    DistanceX,
+    DistanceY,
     DistanceTravelled,
+    AngleBetween,
     JumpCount,
     Grounded,
 
@@ -96,6 +101,10 @@ public class FunctionManager : MonoBehaviour {
                 return xTarget.transform.position.x;
             case Axis.YPosition:
                 return xTarget.transform.position.y;
+            case Axis.XLocalPosition:
+                return xTarget.transform.localPosition.x;
+            case Axis.YLocalPosition:
+                return xTarget.transform.localPosition.y;
             case Axis.XInput:
                 return Input.GetAxis("Horizontal");
             case Axis.YInput:
@@ -106,6 +115,14 @@ public class FunctionManager : MonoBehaviour {
                 return  (Mathf.Abs(xTarget.transform.localScale.x) + Mathf.Abs(xTarget.transform.localScale.y)) / 2f;
             case Axis.Distance:
                 return (xTarget.transform.position - yTarget.transform.position).magnitude;
+            case Axis.DistanceX:
+                return (xTarget.transform.position - yTarget.transform.position).x;
+            case Axis.DistanceY:
+                return (xTarget.transform.position - yTarget.transform.position).y;
+            case Axis.AngleBetween:
+                float value = (float)((System.Math.Atan2((xTarget.transform.position - yTarget.transform.position).y, (xTarget.transform.position - yTarget.transform.position).x) / Mathf.PI) * 180f);
+                if (value < 0) value += 360f;
+                return value;
             case Axis.DistanceTravelled:
                 return (xTarget.GetComponent<Entity>() ? xTarget.GetComponent<Entity>().distanceTravelled : 0f);
             case Axis.JumpCount:
@@ -266,7 +283,9 @@ public class FunctionManager : MonoBehaviour {
                 break;
             case Axis.GameGravityRotation:
                 float gravMag = Physics2D.gravity.magnitude;
-                targetVector = new Vector2(Mathf.Cos(val * Mathf.Deg2Rad), Mathf.Sin(val * Mathf.Deg2Rad)) * gravMag;
+                print("Gravity: " + Physics2D.gravity);
+                targetVector = Quaternion.Euler(0, 0, val) * Vector2.down * gravMag;
+                //targetVector = new Vector2(Mathf.Cos(val * Mathf.Deg2Rad), Mathf.Sin(val * Mathf.Deg2Rad)) * gravMag;
                 Physics2D.gravity = SmoothVector(Physics2D.gravity, targetVector);
                 break;
             case Axis.GameGravityScale:
