@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public enum SceneTransition {
+    None,
     Fade,
+    CircleWipe,
 }
 
-[RequireComponent(typeof(Animator))]
 public class SceneLoader : MonoBehaviour
 {
     public static SceneLoader Instance;
@@ -17,15 +18,29 @@ public class SceneLoader : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance == this)
-        {
+        if (Instance != null && Instance == this) {
             Destroy(gameObject);
             return;
-        }
-        else
+        } else {
             Instance = this;
-        anim = GetComponent<Animator>();
+        }
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void SetAnimator (SceneTransition transition) {
+        switch (transition) {
+            case SceneTransition.Fade:
+                anim = transform.Find("BasicFade").GetComponent<Animator>();
+                break;
+            case SceneTransition.CircleWipe:
+                anim = transform.Find("CircleWipe").GetComponent<Animator>();
+                break;
+            case SceneTransition.None:
+                anim = null;
+                break;
+            default:
+                break;
+        }
     }
 
     public static void LoadNextScene(SceneTransition transition = SceneTransition.Fade) {
@@ -38,23 +53,23 @@ public class SceneLoader : MonoBehaviour
 
     public static void LoadScene(int buildIndex, SceneTransition transition = SceneTransition.Fade) {
         if (Instance.loading) return;
-
         Instance.StartCoroutine(Instance.LoadSceneAsync(buildIndex, transition));
     }
 
     private IEnumerator LoadSceneAsync(int buildIndex, SceneTransition transition) {
         loading = true;
-        anim.SetInteger("Transition", (int)transition);
-        anim.SetTrigger("Out");
-        
-        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        Instance.SetAnimator(transition);
+        if (anim != null) {
+            anim.SetTrigger("Out");
+            yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        }
 
         AsyncOperation async = SceneManager.LoadSceneAsync(buildIndex);
         while (!async.isDone)
         {
             yield return null;
         }
-        anim.SetTrigger("In");
+        if (anim != null) anim.SetTrigger("In");
         loading = false;
     }
 }
