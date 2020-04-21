@@ -210,7 +210,9 @@ public class CharacterController2D : Entity
                 footstepNextThreshold += footstepFrequencyModifier;
                 FX_Spawner.instance.SpawnFX(FXType.FOOTSTEP, groundCheck.position, Vector3.zero);
             }
-            footstepAnimationTime += xSpeed * Time.deltaTime;
+            if (grounded) {
+                footstepAnimationTime += xSpeed * Time.deltaTime;
+            }
 
             anim.SetFloat("speed", xSpeed);
 

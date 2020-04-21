@@ -170,7 +170,7 @@ SubShader {
 
 			float4 vert = input.position;
 
-			vert += frac(sin(dot(vert.xy + (_Time * 0.0001), float2(12.9898, 78.233))) * 43758.5453123) * .1;
+			vert += frac(sin(dot(vert.xy + (_Time * 0.000001), float2(12.9898, 78.233))) * 43758.5453123) * .1;
 
 			vert.x += _VertexOffsetX;
 			vert.y += _VertexOffsetY;
