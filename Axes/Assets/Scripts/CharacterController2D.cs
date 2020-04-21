@@ -208,7 +208,8 @@ public class CharacterController2D : Entity
             float xSpeed = Vector3.Project(velocity, transform.right).magnitude;
             if (footstepAnimationTime > footstepNextThreshold) {
                 footstepNextThreshold += footstepFrequencyModifier;
-                FX_Spawner.instance.SpawnFX(FXType.FOOTSTEP, groundCheck.position, Vector3.zero);
+                if (FX_Spawner.instance)
+                    FX_Spawner.instance.SpawnFX(FXType.FOOTSTEP, groundCheck.position, Vector3.zero);
             }
             if (grounded) {
                 footstepAnimationTime += xSpeed * Time.deltaTime;
