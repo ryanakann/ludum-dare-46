@@ -5,7 +5,8 @@ using UnityEngine;
 public class Interactor : MonoBehaviour
 {
 
-    Transform interactable_point, interactable_parent, interactable;
+    Transform interactable_point, interactable_parent;
+    [HideInInspector] public Transform interactable;
     List<Transform> potential_interactables = new List<Transform>();
 
     Vector2 throw_force = new Vector2(10f, 5f);
@@ -46,6 +47,9 @@ public class Interactor : MonoBehaviour
                     break;
                 case InteractType.THROW:
                     Throw();
+                    break;
+                case InteractType.KEY:
+                    Key();
                     break;
                 case InteractType.NONE:
                     break;
@@ -108,6 +112,22 @@ public class Interactor : MonoBehaviour
             }
         }
         interactable = null;
+    }
+
+    void Key()
+    {
+        Transform key = interactable;
+        if (interactable.GetComponent<Key>())
+        {
+            foreach (Transform t in potential_interactables)
+            {
+                if (t.GetComponent<Door>() && t.GetComponent<Door>().Open())
+                {
+                    Drop();
+                    Destroy(key.gameObject);
+                }
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
