@@ -28,6 +28,14 @@ public class SceneLoader : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public static void LoadNextScene(SceneTransition transition = SceneTransition.Fade) {
+        LoadScene((SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings, transition);
+    }
+
+    public static void ResetScene(SceneTransition transition = SceneTransition.Fade) {
+        LoadScene(SceneManager.GetActiveScene().buildIndex, transition);
+    }
+
     public static void LoadScene(int buildIndex, SceneTransition transition = SceneTransition.Fade) {
         if (Instance.loading) return;
 

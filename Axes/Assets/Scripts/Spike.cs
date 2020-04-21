@@ -7,7 +7,7 @@ public class Spike : MonoBehaviour {
         if (collision.CompareTag("Player")) {
             collision.gameObject.GetComponent<CharacterController2D>().enabled = false;
             collision.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            SceneLoader.Instance.RestartScene();
+            SceneLoader.ResetScene();
         }
     }
 }
