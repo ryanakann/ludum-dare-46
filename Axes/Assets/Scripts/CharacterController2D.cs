@@ -74,7 +74,7 @@ public class CharacterController2D : Entity
 		// This can be done using layers instead but Sample Assets will not overwrite your project settings.
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, groundLayer);
 		for (int i = 0; i < colliders.Length; i++) {
-			if (colliders[i].gameObject != gameObject) {
+			if (colliders[i].gameObject != gameObject && !colliders[i].isTrigger) {
 				grounded = true;
 				if (!wasGrounded) OnLandEvent.Invoke();
 			}
@@ -101,9 +101,14 @@ public class CharacterController2D : Entity
         if (!crouch)
         {
             // If the character has a ceiling preventing them from standing up, keep them crouching
-            if (Physics2D.OverlapCircle(ceilingCheck.position, ceilingRadius, groundLayer))
+            Collider2D[] colls = Physics2D.OverlapCircleAll(ceilingCheck.position, ceilingRadius, groundLayer);
+            foreach (Collider2D c in colls)
             {
-                crouch = true;
+                if (!c.isTrigger)
+                {
+                    crouch = true;
+                    break;
+                }
             }
         }
 
