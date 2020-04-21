@@ -201,7 +201,6 @@ public class FunctionManager : MonoBehaviour {
                 break;
             case Axis.Scale:
                 if (yTarget.GetComponent<Cinemachine.CinemachineVirtualCamera>()) {
-                    print("Val: " + val);
                     yTarget.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize = val;
                 } else {
                     Vector3 ratio = yTarget.transform.localScale.normalized;

@@ -7,7 +7,7 @@ using UnityEngine.Audio;
 
 public class FX_Object : MonoBehaviour
 {
-    protected float pitch_range = 0.2f, amp_range = 0.02f;
+    public float pitch_range = 0.2f, amp_range = 0.02f;
     public float vol = -1f;
     public float lifetime = 0;
 

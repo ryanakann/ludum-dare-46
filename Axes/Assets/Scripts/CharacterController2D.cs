@@ -4,6 +4,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody2D))]
 public class CharacterController2D : Entity
 {
+    [Header("Movement")]
 	[SerializeField] public float jumpForce = 400f;                          // Amount of force added when the player jumps.
 	[SerializeField] public float speed = 2f;
     Timer jump_cooldown = new Timer(0.5f);
@@ -14,6 +15,8 @@ public class CharacterController2D : Entity
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
 	[SerializeField] private bool m_AirControl = false;							// Whether or not a player can steer while jumping;
 	[SerializeField] private LayerMask groundLayer;							// A mask determining what is ground to the character
+
+    [Header("References")]
 	[SerializeField] private Transform groundCheck;							// A position marking where to check if the player is grounded.
 	[SerializeField] private Transform ceilingCheck;							// A position marking where to check for ceilings
 	[SerializeField] private Collider2D crouchDisableCollider;				// A collider that will be disabled when crouching
@@ -33,6 +36,11 @@ public class CharacterController2D : Entity
 	private Animator anim;
 
 	[HideInInspector] public int jumpCount;
+
+    [Header("SFX")]
+    public float footstepFrequencyModifier = 1f;
+    private float footstepAnimationTime;
+    private float footstepNextThreshold;
 
 	[Header("Events")]
 	[Space]
@@ -62,6 +70,9 @@ public class CharacterController2D : Entity
 		jumpCount = 0;
 
 		anim = GetComponent<Animator>();
+
+        footstepAnimationTime = 0f;
+        footstepNextThreshold = footstepFrequencyModifier;
 	}
 
 	protected override void FixedUpdate() {
@@ -194,7 +205,14 @@ public class CharacterController2D : Entity
             // And then smoothing it out and applying it to the character
             velocity = Vector3.SmoothDamp(velocity, targetVelocity, ref velocity, m_MovementSmoothing);
 
-            anim.SetFloat("speed", Vector3.Project(velocity, transform.right).magnitude);
+            float xSpeed = Vector3.Project(velocity, transform.right).magnitude;
+            if (footstepAnimationTime > footstepNextThreshold) {
+                footstepNextThreshold += footstepFrequencyModifier;
+                FX_Spawner.instance.SpawnFX(FXType.FOOTSTEP, groundCheck.position, Vector3.zero);
+            }
+            footstepAnimationTime += xSpeed * Time.deltaTime;
+
+            anim.SetFloat("speed", xSpeed);
 
             // If the input is moving the player right and the player is facing left...
             if (move > 0 && !facingRight)
