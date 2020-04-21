@@ -3454,12 +3454,12 @@ PrefabInstance:
     - target: {fileID: 6425493784521209661, guid: ff3ac0bf50202f440b1fea0fd87919ec,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.485239
+      value: -4.474844
       objectReference: {fileID: 0}
     - target: {fileID: 6425493784521209661, guid: ff3ac0bf50202f440b1fea0fd87919ec,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.5798509
+      value: -1.5798309
       objectReference: {fileID: 0}
     - target: {fileID: 6425493784521209662, guid: ff3ac0bf50202f440b1fea0fd87919ec,
         type: 3}
@@ -3615,16 +3615,6 @@ PrefabInstance:
         type: 3}
       propertyPath: function.m_Curve.Array.data[1].tangentMode
       value: 34
-      objectReference: {fileID: 0}
-    - target: {fileID: 6425493785205248280, guid: ff3ac0bf50202f440b1fea0fd87919ec,
-        type: 3}
-      propertyPath: speed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6425493785205248280, guid: ff3ac0bf50202f440b1fea0fd87919ec,
-        type: 3}
-      propertyPath: jumpForce
-      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 6425493785205248281, guid: ff3ac0bf50202f440b1fea0fd87919ec,
         type: 3}

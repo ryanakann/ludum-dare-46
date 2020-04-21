@@ -37,7 +37,7 @@ public class Interactor : MonoBehaviour
                 }
             }
         }
-        if (Input.GetButtonDown("Use"))
+        if (Input.GetButtonDown("Use") && interactable)
         {
             switch (interactable.GetComponent<Interactable>().Use())
             {

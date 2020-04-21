@@ -6,6 +6,7 @@ public class CharacterController2D : Entity
 {
 	[SerializeField] public float jumpForce = 400f;                          // Amount of force added when the player jumps.
 	[SerializeField] public float speed = 2f;
+    Timer jump_cooldown = new Timer(0.5f);
 
 	[Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;			// Amount of maxSpeed applied to crouching movement. 1 = 100%
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
@@ -42,8 +43,12 @@ public class CharacterController2D : Entity
 	public BoolEvent OnCrouchEvent;
 	private bool groundedLF = false;
 
-	protected override void Awake() {
+    float move; bool crouch; bool jump; bool jumpStay;
+
+
+    protected override void Awake() {
 		base.Awake();
+        jump_cooldown.Reset();
 		rb = GetComponent<Rigidbody2D>();
 		gravity = Physics2D.gravity;
 		gravityLF = gravity;
@@ -70,120 +75,148 @@ public class CharacterController2D : Entity
 			}
 		}
 		anim.SetBool("grounded", grounded);
+        HandleMovement();
 	}
 
 
 	public void Move(float move, bool crouch, bool jump, bool jumpStay) {
-		anim.SetFloat("x", move);
-		velocity = rb.velocity;
-
-		//CHECK CROUCH
-        /******************************************************************/
-        if (!crouch) {
-			// If the character has a ceiling preventing them from standing up, keep them crouching
-			if (Physics2D.OverlapCircle(ceilingCheck.position, ceilingRadius, groundLayer)) {
-				crouch = true;
-			}
-		}
-
-		//CHECK GRAVITY
-		/******************************************************************/
-		gravity = Physics2D.gravity * rb.gravityScale;
-		if ((gravityLF - gravity).sqrMagnitude > 0.001f) {
-			//Always face away from gravity
-			rb.freezeRotation = false;
-			transform.forward = Vector3.forward;
-			transform.up = -gravity;
-			rb.freezeRotation = true;
-		} else {
-			rb.freezeRotation = true;
-		}
-		gravityLF = gravity;
-
-		//JUMP MODIFIER
-		/******************************************************************/
-		// If not holding down jump and going up
-		if (!grounded && !jumpStay && Vector2.Dot(gravity, velocity) < 0f) {
-			//print("1");
-			rb.gravityScale = 6f;
-		} else if (!grounded && Vector2.Dot(gravity, velocity) > 0f)  {
-			//print("2");
-			rb.gravityScale = 6f;
-		} else {
-			//print("3");
-			rb.gravityScale = 3f;
-		}
-
-		//PLAYER CONTROL
-		/******************************************************************/
-		//Only if grounded or airControl is turned on
-		if (grounded || m_AirControl) {
-			// If crouching
-			if (crouch) {
-				if (!groundedLF) {
-					groundedLF = true;
-					OnCrouchEvent.Invoke(true);
-				}
-
-				// Reduce the speed by the crouchSpeed multiplier
-				move *= m_CrouchSpeed;
-
-				// Disable one of the colliders when crouching
-				if (crouchDisableCollider != null)
-					crouchDisableCollider.enabled = false;
-			} else {
-				// Enable the collider when not crouching
-				if (crouchDisableCollider != null)
-					crouchDisableCollider.enabled = true;
-
-				if (groundedLF) {
-					groundedLF = false;
-					OnCrouchEvent.Invoke(false);
-				}
-			}
-
-
-			// Move the character by finding the target velocity
-			gravVelocity = Vector3.Project(velocity, gravity);
-
-			right = transform.right;
-			targetVelocity = gravVelocity + right * move * speed;
-			//print("TargetVel: " + targetVelocity + "\tMove: " + move);
-			//Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
-
-			// And then smoothing it out and applying it to the character
-			velocity = Vector3.SmoothDamp(velocity, targetVelocity, ref velocity, m_MovementSmoothing);
-
-			anim.SetFloat("speed", Vector3.Project(velocity, transform.right).magnitude);
-
-			// If the input is moving the player right and the player is facing left...
-			if (move > 0 && !facingRight) {
-				// ... flip the player.
-				Flip();
-			}
-			// Otherwise if the input is moving the player left and the player is facing right...
-			else if (move < 0 && facingRight) {
-				// ... flip the player.
-				Flip();
-			}
-		}
-
-
-		//JUMP CONTROL
-		/******************************************************************/
-		if (grounded && jump) {
-			grounded = false;
-
-			velocity = right * move * speed; // Zero out jump velocity
-			velocity -= (Vector3)gravity * jumpForce;
-			
-			jumpCount++;
-
-			anim.SetTrigger("jump");
-		}
-
-		rb.velocity = velocity;
+        this.move = move;
+        this.crouch = crouch;
+        this.jump = jump;
+        this.jumpStay = jumpStay;
 	}
+
+    void HandleMovement()
+    {
+        anim.SetFloat("x", move);
+        velocity = rb.velocity;
+
+        //CHECK CROUCH
+        /******************************************************************/
+        if (!crouch)
+        {
+            // If the character has a ceiling preventing them from standing up, keep them crouching
+            if (Physics2D.OverlapCircle(ceilingCheck.position, ceilingRadius, groundLayer))
+            {
+                crouch = true;
+            }
+        }
+
+        //CHECK GRAVITY
+        /******************************************************************/
+        gravity = Physics2D.gravity * rb.gravityScale;
+        if ((gravityLF - gravity).sqrMagnitude > 0.001f)
+        {
+            //Always face away from gravity
+            rb.freezeRotation = false;
+            transform.forward = Vector3.forward;
+            transform.up = -gravity;
+            rb.freezeRotation = true;
+        }
+        else
+        {
+            rb.freezeRotation = true;
+        }
+        gravityLF = gravity;
+
+        //JUMP MODIFIER
+        /******************************************************************/
+        // If not holding down jump and going up
+        if (!grounded && !jumpStay && Vector2.Dot(gravity, velocity) < 0f)
+        {
+            //print("1");
+            rb.gravityScale = 6f;
+        }
+        else if (!grounded && Vector2.Dot(gravity, velocity) > 0f)
+        {
+            //print("2");
+            rb.gravityScale = 6f;
+        }
+        else
+        {
+            //print("3");
+            rb.gravityScale = 3f;
+        }
+
+        //PLAYER CONTROL
+        /******************************************************************/
+        //Only if grounded or airControl is turned on
+        if (grounded || m_AirControl)
+        {
+            // If crouching
+            if (crouch)
+            {
+                if (!groundedLF)
+                {
+                    groundedLF = true;
+                    OnCrouchEvent.Invoke(true);
+                }
+
+                // Reduce the speed by the crouchSpeed multiplier
+                move *= m_CrouchSpeed;
+
+                // Disable one of the colliders when crouching
+                if (crouchDisableCollider != null)
+                    crouchDisableCollider.enabled = false;
+            }
+            else
+            {
+                // Enable the collider when not crouching
+                if (crouchDisableCollider != null)
+                    crouchDisableCollider.enabled = true;
+
+                if (groundedLF)
+                {
+                    groundedLF = false;
+                    OnCrouchEvent.Invoke(false);
+                }
+            }
+
+
+            // Move the character by finding the target velocity
+            gravVelocity = Vector3.Project(velocity, gravity);
+
+            right = transform.right;
+            targetVelocity = gravVelocity + right * move * speed;
+            //print("TargetVel: " + targetVelocity + "\tMove: " + move);
+            //Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
+
+            // And then smoothing it out and applying it to the character
+            velocity = Vector3.SmoothDamp(velocity, targetVelocity, ref velocity, m_MovementSmoothing);
+
+            anim.SetFloat("speed", Vector3.Project(velocity, transform.right).magnitude);
+
+            // If the input is moving the player right and the player is facing left...
+            if (move > 0 && !facingRight)
+            {
+                // ... flip the player.
+                Flip();
+            }
+            // Otherwise if the input is moving the player left and the player is facing right...
+            else if (move < 0 && facingRight)
+            {
+                // ... flip the player.
+                Flip();
+            }
+        }
+
+
+        //JUMP CONTROL
+        /******************************************************************/
+        if (grounded && jump && jump_cooldown.Check())
+        {
+            grounded = false;
+
+            velocity = right * move * speed; // Zero out jump velocity
+            velocity -= (Vector3)gravity.normalized * jumpForce;
+
+            jumpCount++;
+
+            anim.SetTrigger("jump");
+        }
+
+        rb.velocity = velocity;
+    }
 
 	public void Die () {
 		anim.SetTrigger("hurt");
