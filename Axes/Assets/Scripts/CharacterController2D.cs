@@ -8,6 +8,8 @@ public class CharacterController2D : Entity
 	[SerializeField] public float speed = 2f;
     Timer jump_cooldown = new Timer(0.5f);
 
+    SpriteRenderer sr;
+
 	[Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;			// Amount of maxSpeed applied to crouching movement. 1 = 100%
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
 	[SerializeField] private bool m_AirControl = false;							// Whether or not a player can steer while jumping;
@@ -48,6 +50,7 @@ public class CharacterController2D : Entity
 
     protected override void Awake() {
 		base.Awake();
+        sr = GetComponent<SpriteRenderer>();
         jump_cooldown.Reset();
 		rb = GetComponent<Rigidbody2D>();
 		gravity = Physics2D.gravity;
@@ -64,6 +67,8 @@ public class CharacterController2D : Entity
 	protected override void FixedUpdate() {
 		bool wasGrounded = grounded;
 		grounded = false;
+
+        groundCheck.position = new Vector2(groundCheck.position.x, sr.bounds.center.y - sr.bounds.extents.y + groundedRadius);
 
 		// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
 		// This can be done using layers instead but Sample Assets will not overwrite your project settings.
@@ -244,7 +249,8 @@ public class CharacterController2D : Entity
 		Gizmos.DrawRay(rb.position, transform.forward * 5f);
 		Gizmos.color = Color.cyan;
 		Gizmos.DrawWireSphere((Vector3)rb.position + targetVelocity, 0.5f);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere((Vector3)groundCheck.position, groundedRadius);
 
-
-	}
+    }
 }
