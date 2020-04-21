@@ -177,10 +177,17 @@ public class FunctionManager : MonoBehaviour {
                 targetVector = new Vector3(val, yTarget.transform.position.y, yTarget.transform.position.z);
                 yTarget.transform.position = SmoothVector(yTarget.transform.position, targetVector);
                 break;
+            case Axis.XLocalPosition:
+                targetVector = new Vector3(val, yTarget.transform.localPosition.y, yTarget.transform.localPosition.z);
+                yTarget.transform.localPosition = SmoothVector(yTarget.transform.localPosition, targetVector);
+                break;
             case Axis.YPosition:
                 targetVector = new Vector3(yTarget.transform.position.x, val, yTarget.transform.position.z);
                 yTarget.transform.position = SmoothVector(yTarget.transform.position, targetVector);
-
+                break;
+            case Axis.YLocalPosition:
+                targetVector = new Vector3(yTarget.transform.localPosition.x, val, yTarget.transform.localPosition.z);
+                yTarget.transform.localPosition = SmoothVector(yTarget.transform.localPosition, targetVector);
                 break;
             case Axis.XInput:
                 print("Error: PlayerXInput is not writeable");
@@ -204,6 +211,9 @@ public class FunctionManager : MonoBehaviour {
                     yTarget.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize = val;
                 } else {
                     Vector3 ratio = yTarget.transform.localScale.normalized;
+                    float multiplier = 1 / Mathf.Min(Mathf.Abs(ratio.x), Mathf.Abs(ratio.y));
+                    ratio *= multiplier;
+                    print("Target Magnitude: " + val + "\tVector: " + ratio * val);
                     yTarget.transform.localScale = SmoothVector(yTarget.transform.localScale, ratio * val);
                 }
                 break;
