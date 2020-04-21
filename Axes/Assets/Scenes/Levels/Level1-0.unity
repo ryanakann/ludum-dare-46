@@ -452,6 +452,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1197285786, guid: b974a1d5aa75cb5429252082d98c0e08, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1756943033, guid: b974a1d5aa75cb5429252082d98c0e08, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1756943033, guid: b974a1d5aa75cb5429252082d98c0e08, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1756943033, guid: b974a1d5aa75cb5429252082d98c0e08, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8547074216908387241, guid: b974a1d5aa75cb5429252082d98c0e08,
         type: 3}
       propertyPath: m_Name
@@ -1187,6 +1203,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1020318623603065810, guid: 28806b613eb026f49883b1344ce411e9,
+        type: 3}
+      propertyPath: sceneTransition
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6463714720855049793, guid: 28806b613eb026f49883b1344ce411e9,
         type: 3}
       propertyPath: m_Name

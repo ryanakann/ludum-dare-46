@@ -61,6 +61,7 @@ public class SceneLoader : MonoBehaviour
         Instance.SetAnimator(transition);
         if (anim != null) {
             anim.SetTrigger("Out");
+            yield return new WaitForEndOfFrame();
             yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
         }
 
