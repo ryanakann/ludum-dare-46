@@ -213,7 +213,6 @@ public class FunctionManager : MonoBehaviour {
                     Vector3 ratio = yTarget.transform.localScale.normalized;
                     float multiplier = 1 / Mathf.Min(Mathf.Abs(ratio.x), Mathf.Abs(ratio.y));
                     ratio *= multiplier;
-                    print("Target Magnitude: " + val + "\tVector: " + ratio * val);
                     yTarget.transform.localScale = SmoothVector(yTarget.transform.localScale, ratio * val);
                 }
                 break;

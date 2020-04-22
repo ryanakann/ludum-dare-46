@@ -30,7 +30,6 @@ public class FX_SoundList : FX_Object
                 soundListIndices.Add(objName, 0);
                 index = 0;
             }
-            print("Index: " + index);
             aud.clip = clips[index % clips.Count];
         } else {
             aud.clip = clips[Random.Range(0, clips.Count)];
