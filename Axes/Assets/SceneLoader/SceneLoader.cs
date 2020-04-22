@@ -11,20 +11,21 @@ public enum SceneTransition {
 
 public class SceneLoader : MonoBehaviour
 {
-    public static SceneLoader Instance;
+    public static SceneLoader instance;
     Animator anim;
 
     bool loading;
 
     private void Awake()
     {
-        if (Instance != null && Instance == this) {
+        if (null == instance) {
+            instance = this;
+            transform.SetParent(null);
+            DontDestroyOnLoad(gameObject);
+        } else {
             Destroy(gameObject);
             return;
-        } else {
-            Instance = this;
         }
-        DontDestroyOnLoad(gameObject);
     }
 
     private void SetAnimator (SceneTransition transition) {
@@ -52,13 +53,13 @@ public class SceneLoader : MonoBehaviour
     }
 
     public static void LoadScene(int buildIndex, SceneTransition transition = SceneTransition.Fade) {
-        if (Instance.loading) return;
-        Instance.StartCoroutine(Instance.LoadSceneAsync(buildIndex, transition));
+        if (instance.loading) return;
+        instance.StartCoroutine(instance.LoadSceneAsync(buildIndex, transition));
     }
 
     private IEnumerator LoadSceneAsync(int buildIndex, SceneTransition transition) {
         loading = true;
-        Instance.SetAnimator(transition);
+        instance.SetAnimator(transition);
         if (anim != null) {
             anim.SetTrigger("Out");
             yield return new WaitForEndOfFrame();

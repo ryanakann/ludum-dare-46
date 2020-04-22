@@ -97,7 +97,12 @@ public class CharacterController2D : Entity
 		}
 		anim.SetBool("grounded", grounded);
 
-        HandleMovement();
+        if (!frozen) {
+            rb.constraints = RigidbodyConstraints2D.None;
+            HandleMovement();
+        } else {
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
 
         frozenLF = frozen;
         lockedLF = locked;
@@ -105,11 +110,17 @@ public class CharacterController2D : Entity
 
 
 	public void Move(float move, bool crouch, bool jump, bool jumpStay) {
-        if (locked) return;
-        this.move = move;
-        this.crouch = crouch;
-        this.jump = jump;
-        this.jumpStay = jumpStay;
+        if (locked) {
+            this.move = 0f;
+            this.crouch = false;
+            this.jump = false;
+            this.jumpStay = false;
+        } else {
+            this.move = move;
+            this.crouch = crouch;
+            this.jump = jump;
+            this.jumpStay = jumpStay;
+        }
 	}
 
     void HandleMovement()

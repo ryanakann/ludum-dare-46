@@ -10,12 +10,15 @@ public class FX_Object : MonoBehaviour
     public float pitch_range = 0.2f, amp_range = 0.02f;
     public float vol = -1f;
     public float lifetime = 0;
+    Transform parent;
 
     public AudioMixerGroup mixerGroup;
     // Start is called before the first frame update
     void Start()
     {
-
+        parent = transform.parent;
+        transform.SetParent(null);
+        DontDestroyOnLoad(gameObject);
         LookAtConstraint lac = GetComponent<LookAtConstraint>();
         if (lac)
         {

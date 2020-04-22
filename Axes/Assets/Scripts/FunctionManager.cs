@@ -66,15 +66,6 @@ public class FunctionManager : MonoBehaviour {
 
     private const float smoothTime = 0.02f;
 
-    private void Start () {
-        if (xTarget == null) {
-            xTarget = GameObject.FindWithTag("Player");
-        }
-        if (yTarget == null) {
-            yTarget = GameObject.FindWithTag("Player");
-        }
-    }
-
     private void LateUpdate () {
         HandleFunction(x, y);
     }
@@ -310,6 +301,7 @@ public class FunctionManager : MonoBehaviour {
     }
 
     private void HandleFunction (Axis x, Axis y) {
+        if (xTarget == null) return;
         float xi = GetVar(x);
         float xNorm = Mathf.InverseLerp(xRange.x, xRange.y, xi);
         float yNorm = function.Evaluate(xNorm);

@@ -26,7 +26,6 @@ public class FX_SoundList : FX_Object
                 soundListIndices[objName] += 1;
                 index = soundListIndices[objName];
             } else {
-                print("Me here");
                 soundListIndices.Add(objName, 0);
                 index = 0;
             }

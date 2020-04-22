@@ -27,15 +27,12 @@ public class FX_Spawner : MonoBehaviour
 
     // Singleton code
     public static FX_Spawner instance;
-    private void Awake()
-    {
-        if (null == instance)
-        {
+    private void Awake() {
+        if (null == instance) {
             instance = this;
+            transform.SetParent(null);
             DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
+        } else {
             Destroy(gameObject);
             return;
         }
@@ -48,15 +45,13 @@ public class FX_Spawner : MonoBehaviour
     }
 
 
-    public GameObject SpawnFX(GameObject fx, Vector3 position, Vector3 rotation, float vol = -1, Transform parent = null)
-    {
-        print("Here");
+    public GameObject SpawnFX(GameObject fx, Vector3 position, Vector3 rotation, float vol = -1, Transform parent = null) {
         if (fx == null) return null;
-        print(fx.name);
-
         GameObject spawned_fx = Instantiate(fx, position, Quaternion.identity);
-        print(spawned_fx.name);
-        spawned_fx.transform.parent = parent ? parent : holder.transform;
+
+        if (spawned_fx == null) return null;
+
+        spawned_fx.transform.parent = (parent == null ? parent : holder.transform);
 
         if (rotation != Vector3.zero)
             spawned_fx.transform.forward = rotation;
@@ -67,8 +62,7 @@ public class FX_Spawner : MonoBehaviour
         return spawned_fx;
     }
 
-    public GameObject SpawnFX(FXType effectName, Vector3 position, Vector3 rotation, float vol = -1, Transform parent = null)
-    {
+    public GameObject SpawnFX(FXType effectName, Vector3 position, Vector3 rotation, float vol = -1, Transform parent = null) {
         return SpawnFX(FX_Dict[effectName], position, rotation, vol, parent);
         //return SpawnFX(FX_Dict.GetValueOrDefault(effectName, FX_Dict[FXType.Default]), position, rotation, vol, parent);
     }
