@@ -46,8 +46,8 @@ public class Parallax : MonoBehaviour {
 			targetY = Mathf.Clamp(targetY, textureVBounds.x, textureVBounds.y);
 			target = new Vector2(targetX, targetY);
 
-			if (bgs[i].GetComponent<AutoOffset>()) {
-				target += bgs[i].GetComponent<AutoOffset>().offset;
+			if (bgs[i].GetComponent<ParallaxAutoOffset>()) {
+				target += bgs[i].GetComponent<ParallaxAutoOffset>().offset;
 			}
 			mats[i].SetTextureOffset("_MainTex", target);
 		}

@@ -7,6 +7,9 @@ public class Flag : MonoBehaviour {
     public SceneTransition sceneTransition;
     private void OnTriggerEnter2D (Collider2D collision) {
         if (collision.CompareTag("Player")) {
+            if (collision.GetComponent<CharacterController2D>()) {
+                collision.GetComponent<CharacterController2D>().locked = true;
+            }
             SceneLoader.LoadNextScene(sceneTransition);
         }
     }

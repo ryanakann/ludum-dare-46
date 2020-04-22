@@ -35,7 +35,12 @@ public class CharacterController2D : Entity
 
 	private Animator anim;
 
-	[HideInInspector] public int jumpCount;
+    [HideInInspector] public bool locked = false;
+    private bool lockedLF;
+    [HideInInspector] public bool frozen = false;
+    private bool frozenLF;
+
+    [HideInInspector] public int jumpCount;
 
     [Header("SFX")]
     public float footstepFrequencyModifier = 1f;
@@ -91,11 +96,16 @@ public class CharacterController2D : Entity
 			}
 		}
 		anim.SetBool("grounded", grounded);
+
         HandleMovement();
+
+        frozenLF = frozen;
+        lockedLF = locked;
 	}
 
 
 	public void Move(float move, bool crouch, bool jump, bool jumpStay) {
+        if (locked) return;
         this.move = move;
         this.crouch = crouch;
         this.jump = jump;

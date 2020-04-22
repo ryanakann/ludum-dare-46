@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 439247154}
   - component: {fileID: 439247155}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 1480316269}
   - component: {fileID: 1480316271}
   - component: {fileID: 1480316270}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +298,7 @@ GameObject:
   - component: {fileID: 2055495471}
   - component: {fileID: 2055495470}
   - component: {fileID: 2055495469}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

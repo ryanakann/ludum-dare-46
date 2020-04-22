@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AutoOffset : MonoBehaviour {
+public class ParallaxAutoOffset : MonoBehaviour {
     public float cyclesPerSecond;
     public Vector2 direction;
     private Material mat;
