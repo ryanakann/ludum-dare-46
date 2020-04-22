@@ -198,36 +198,6 @@ PrefabInstance:
       propertyPath: m_BoundingShape2D
       value: 
       objectReference: {fileID: 531303148}
-    - target: {fileID: 6425493784521209661, guid: ff3ac0bf50202f440b1fea0fd87919ec,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 6.1689835
-      objectReference: {fileID: 0}
-    - target: {fileID: 6425493784521209661, guid: ff3ac0bf50202f440b1fea0fd87919ec,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.3697817
-      objectReference: {fileID: 0}
-    - target: {fileID: 6425493784521209662, guid: ff3ac0bf50202f440b1fea0fd87919ec,
-        type: 3}
-      propertyPath: orthographic size
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6425493784521209662, guid: ff3ac0bf50202f440b1fea0fd87919ec,
-        type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 257
-      objectReference: {fileID: 0}
-    - target: {fileID: 6425493784521209662, guid: ff3ac0bf50202f440b1fea0fd87919ec,
-        type: 3}
-      propertyPath: m_ClearFlags
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6425493784521209662, guid: ff3ac0bf50202f440b1fea0fd87919ec,
-        type: 3}
-      propertyPath: m_TargetEye
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6425493785017257417, guid: ff3ac0bf50202f440b1fea0fd87919ec,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -293,16 +263,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 468293190}
-    - target: {fileID: 6425493785619734635, guid: ff3ac0bf50202f440b1fea0fd87919ec,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6425493785619734636, guid: ff3ac0bf50202f440b1fea0fd87919ec,
-        type: 3}
-      propertyPath: m_Lens.OrthographicSize
-      value: 7
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff3ac0bf50202f440b1fea0fd87919ec, type: 3}
 --- !u!1 &432863530 stripped
@@ -576,7 +536,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: FunctionHandler
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1831603631, guid: d4c91657219a47b47a98126c7eb42b46, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d4c91657219a47b47a98126c7eb42b46, type: 3}
 --- !u!1 &1831603628 stripped
 GameObject:
@@ -785,31 +746,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Level
-      objectReference: {fileID: 0}
-    - target: {fileID: 4280455369940300014, guid: 0961c162a3b89ef4f98188df5cddae43,
-        type: 3}
-      propertyPath: m_Parameters.numCapVertices
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 4280455369940300014, guid: 0961c162a3b89ef4f98188df5cddae43,
-        type: 3}
-      propertyPath: m_Parameters.numCornerVertices
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 4280455369940300014, guid: 0961c162a3b89ef4f98188df5cddae43,
-        type: 3}
-      propertyPath: m_Parameters.alignment
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4280455369940300014, guid: 0961c162a3b89ef4f98188df5cddae43,
-        type: 3}
-      propertyPath: m_Time
-      value: Infinity
-      objectReference: {fileID: 0}
-    - target: {fileID: 4280455369940300014, guid: 0961c162a3b89ef4f98188df5cddae43,
-        type: 3}
-      propertyPath: m_MinVertexDistance
-      value: 0.001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0961c162a3b89ef4f98188df5cddae43, type: 3}

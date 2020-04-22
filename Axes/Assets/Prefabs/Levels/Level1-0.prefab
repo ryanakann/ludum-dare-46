@@ -7,6 +7,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2671588213399364086}
     m_Modifications:
+    - target: {fileID: 439247155, guid: c228156fd4c2c1d4cb07df027b583d05, type: 3}
+      propertyPath: m_Time
+      value: Infinity
+      objectReference: {fileID: 0}
+    - target: {fileID: 439247155, guid: c228156fd4c2c1d4cb07df027b583d05, type: 3}
+      propertyPath: m_Parameters.numCornerVertices
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 439247155, guid: c228156fd4c2c1d4cb07df027b583d05, type: 3}
+      propertyPath: m_Parameters.numCapVertices
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 439247155, guid: c228156fd4c2c1d4cb07df027b583d05, type: 3}
+      propertyPath: m_Parameters.alignment
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439247155, guid: c228156fd4c2c1d4cb07df027b583d05, type: 3}
+      propertyPath: m_MinVertexDistance
+      value: 0.001
+      objectReference: {fileID: 0}
     - target: {fileID: 9201753180076506810, guid: c228156fd4c2c1d4cb07df027b583d05,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -92,7 +112,7 @@ PrefabInstance:
     - target: {fileID: 7045716596765248851, guid: 9ee6ba963aae0094b927b707377269d3,
         type: 3}
       propertyPath: m_Name
-      value: Level1-0
+      value: Level
       objectReference: {fileID: 0}
     - target: {fileID: 7045716596765248860, guid: 9ee6ba963aae0094b927b707377269d3,
         type: 3}
