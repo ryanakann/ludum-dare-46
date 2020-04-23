@@ -10,7 +10,7 @@ public class All1ShaderDemoController : MonoBehaviour
 
     private int currExpositor;
 
-    [SerializeField] private GameObject background;
+    [SerializeField] private UnityEngine.GameObject background;
     private Material backgroundMat;
     [SerializeField] private float colorLerpSpeed;
     private Color[] targetColors;

@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class FX_CollisionSound : MonoBehaviour
 {
-    public List<GameObject> collisionEffects = new List<GameObject>();
+    public List<UnityEngine.GameObject> collisionEffects = new List<UnityEngine.GameObject>();
     float impactThreshold = 15f;
     float maxThreshold = 50f;
 
@@ -38,7 +38,7 @@ public class FX_CollisionSound : MonoBehaviour
             float vol = Mathf.Clamp01(collision.impulse.magnitude / maxThreshold);
             if (collisionEffects.Count > 0)
             {
-                GameObject fx = collisionEffects[Random.Range(0, collisionEffects.Count)];
+                UnityEngine.GameObject fx = collisionEffects[Random.Range(0, collisionEffects.Count)];
                 FX_Spawner.instance.SpawnFX(fx, collision.contacts[0].point, collision.contacts[0].normal, vol);
             }
         }

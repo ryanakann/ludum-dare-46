@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FX_IdleSound : MonoBehaviour
 {
-    public List<GameObject> sounds = new List<GameObject>();
+    public List<UnityEngine.GameObject> sounds = new List<UnityEngine.GameObject>();
     public float soundTime = 10f;
     bool playing;
 
@@ -22,7 +22,7 @@ public class FX_IdleSound : MonoBehaviour
     {
         playing = true;
         yield return new WaitForSeconds(Random.Range(1f, soundTime));
-        GameObject fx = sounds[Random.Range(0, sounds.Count)];
+        UnityEngine.GameObject fx = sounds[Random.Range(0, sounds.Count)];
         FX_Spawner.instance.SpawnFX(fx, transform.position, transform.up);
         playing = false;
     }

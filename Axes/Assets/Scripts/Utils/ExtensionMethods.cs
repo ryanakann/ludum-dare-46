@@ -32,12 +32,12 @@ public static class ExtensionMethods
         return comp as T;
     }
 
-    public static T AddComponent<T>(this GameObject go, T toAdd) where T : Component
+    public static T AddComponent<T>(this UnityEngine.GameObject go, T toAdd) where T : Component
     {
         return go.AddComponent<T>().GetCopyOf(toAdd) as T;
     }
 
-    public static T FindComponent<T>(this GameObject g, bool in_parent = true, bool in_children = true, int sibling_depth = 0) where T : Component
+    public static T FindComponent<T>(this UnityEngine.GameObject g, bool in_parent = true, bool in_children = true, int sibling_depth = 0) where T : Component
     {
         if (g.GetComponent<T>() != null)
         {
@@ -51,7 +51,7 @@ public static class ExtensionMethods
             if (g.GetComponentInParent<T>() != null)
                 return g.GetComponentInParent<T>();
 
-        GameObject current = g;
+        UnityEngine.GameObject current = g;
         while (sibling_depth > 0)
         {
             current = current.transform.parent.gameObject;

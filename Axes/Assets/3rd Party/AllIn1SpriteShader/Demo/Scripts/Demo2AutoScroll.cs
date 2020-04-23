@@ -6,7 +6,7 @@ public class Demo2AutoScroll : MonoBehaviour
 {
     private Transform[] children;
     public float totalTime;
-    public GameObject sceneDescription;
+    public UnityEngine.GameObject sceneDescription;
 
     void Start()
     {

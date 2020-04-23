@@ -23,7 +23,7 @@ public class FX_Object : MonoBehaviour
         if (lac)
         {
             ConstraintSource src = new ConstraintSource();
-            src.sourceTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            src.sourceTransform = UnityEngine.GameObject.FindGameObjectWithTag("Player").transform;
             src.weight = 1;
             lac.AddSource(src);
             lac.constraintActive = true;
