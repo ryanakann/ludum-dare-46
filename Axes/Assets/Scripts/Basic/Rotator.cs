@@ -6,9 +6,9 @@ public class Rotator : MonoBehaviour
     [HideInInspector]
     public float smooth_speed = 0.1f;
 #pragma warning disable CS0649
-    GameObject target;
+    UnityEngine.GameObject target;
 
-    public void Face(GameObject target, bool lockX = true, bool lockY = true, bool lockZ = true)
+    public void Face(UnityEngine.GameObject target, bool lockX = true, bool lockY = true, bool lockZ = true)
     {
         Vector3 direction = (target.transform.position - transform.position).normalized;
         Face(direction, lockZ, lockY, lockZ);
@@ -30,7 +30,7 @@ public class Rotator : MonoBehaviour
                                             transform.rotation.w);
     }
 
-    public void TurnTo(GameObject target, bool lockX = true, bool lockY = true, bool lockZ = true, bool follow = false)
+    public void TurnTo(UnityEngine.GameObject target, bool lockX = true, bool lockY = true, bool lockZ = true, bool follow = false)
     {
         Vector3 direction = (target.transform.position - transform.position).normalized;
         TurnTo(direction, lockX, lockY, lockZ, follow);

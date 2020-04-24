@@ -9,7 +9,7 @@ public class Door : MonoBehaviour, Interactable
     Animator anim;
 
     public bool uses_key = true;
-    GameObject button;
+    UnityEngine.GameObject button;
 
     // Start is called before the first frame update
     void Start()

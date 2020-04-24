@@ -16,26 +16,23 @@ public class FX_Spawner : MonoBehaviour
     public struct SerializedDict
     {
         public FXType key;
-        public GameObject value;
+        public UnityEngine.GameObject value;
     }
 
     public AudioMixerGroup mixer;
-    private GameObject holder;
+    private UnityEngine.GameObject holder;
 
     public List<SerializedDict> Serialized_FX_Dict = new List<SerializedDict>();
-    public Dictionary<FXType, GameObject> FX_Dict = new Dictionary<FXType, GameObject>();
+    public Dictionary<FXType, UnityEngine.GameObject> FX_Dict = new Dictionary<FXType, UnityEngine.GameObject>();
 
     // Singleton code
     public static FX_Spawner instance;
-    private void Awake()
-    {
-        if (null == instance)
-        {
+    private void Awake() {
+        if (null == instance) {
             instance = this;
+            transform.SetParent(null);
             DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
+        } else {
             Destroy(gameObject);
             return;
         }
@@ -44,19 +41,17 @@ public class FX_Spawner : MonoBehaviour
             FX_Dict[entry.key] = entry.value;
         if (FX_Dict.ContainsKey(FXType.Default))
             FX_Dict[FXType.Default] = null;
-        holder = new GameObject("FX Objects");
+        holder = new UnityEngine.GameObject("FX Objects");
     }
 
 
-    public GameObject SpawnFX(GameObject fx, Vector3 position, Vector3 rotation, float vol = -1, Transform parent = null)
-    {
-        print("Here");
+    public UnityEngine.GameObject SpawnFX(UnityEngine.GameObject fx, Vector3 position, Vector3 rotation, float vol = -1, Transform parent = null) {
         if (fx == null) return null;
-        print(fx.name);
+        UnityEngine.GameObject spawned_fx = Instantiate(fx, position, Quaternion.identity);
 
-        GameObject spawned_fx = Instantiate(fx, position, Quaternion.identity);
-        print(spawned_fx.name);
-        spawned_fx.transform.parent = parent ? parent : holder.transform;
+        if (spawned_fx == null) return null;
+
+        spawned_fx.transform.parent = (parent == null ? parent : holder.transform);
 
         if (rotation != Vector3.zero)
             spawned_fx.transform.forward = rotation;
@@ -67,8 +62,7 @@ public class FX_Spawner : MonoBehaviour
         return spawned_fx;
     }
 
-    public GameObject SpawnFX(FXType effectName, Vector3 position, Vector3 rotation, float vol = -1, Transform parent = null)
-    {
+    public UnityEngine.GameObject SpawnFX(FXType effectName, Vector3 position, Vector3 rotation, float vol = -1, Transform parent = null) {
         return SpawnFX(FX_Dict[effectName], position, rotation, vol, parent);
         //return SpawnFX(FX_Dict.GetValueOrDefault(effectName, FX_Dict[FXType.Default]), position, rotation, vol, parent);
     }
