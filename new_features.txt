@@ -1,0 +1,8 @@
+Composite inputs
+	- don't need to supply list of gameobjects
+	- "every gameobject with this tag"
+	- i.e. "min distance to any object with tag/name"
+Composite outputs
+Auto-detect ranges
+Helper gizmos
+Triggers on threshold or event
