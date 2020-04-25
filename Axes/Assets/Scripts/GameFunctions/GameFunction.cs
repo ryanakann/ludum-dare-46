@@ -104,6 +104,7 @@ public class GameFunction {
             case Axis.Scale:
                 return  (Mathf.Abs(xTarget.transform.localScale.x) + Mathf.Abs(xTarget.transform.localScale.y)) / 2f;
             case Axis.Distance:
+                Debug.Log("Distance: " + (xTarget.transform.position - yTarget.transform.position).magnitude);
                 return (xTarget.transform.position - yTarget.transform.position).magnitude;
             case Axis.DistanceX:
                 return (xTarget.transform.position - yTarget.transform.position).x;
@@ -200,10 +201,7 @@ public class GameFunction {
                 if (yTarget.GetComponent<Cinemachine.CinemachineVirtualCamera>()) {
                     yTarget.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize = val;
                 } else {
-                    Vector3 ratio = yTarget.transform.localScale.normalized;
-                    float multiplier = 1 / Mathf.Min(Mathf.Abs(ratio.x), Mathf.Abs(ratio.y));
-                    ratio *= multiplier;
-                    yTarget.transform.localScale = SmoothVector(yTarget.transform.localScale, ratio * val);
+                    yTarget.transform.localScale = SmoothVector(yTarget.transform.localScale, Vector3.one * val);
                 }
                 break;
             case Axis.Distance:

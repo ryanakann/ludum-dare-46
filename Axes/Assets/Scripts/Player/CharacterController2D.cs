@@ -14,12 +14,12 @@ public class CharacterController2D : Entity
 	[Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;			// Amount of maxSpeed applied to crouching movement. 1 = 100%
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
 	[SerializeField] private bool m_AirControl = false;							// Whether or not a player can steer while jumping;
-	[SerializeField] private LayerMask groundLayer;							// A mask determining what is ground to the character
+	[SerializeField] private LayerMask groundLayer = 1;							// A mask determining what is ground to the character
 
     [Header("References")]
-	[SerializeField] private Transform groundCheck;							// A position marking where to check if the player is grounded.
-	[SerializeField] private Transform ceilingCheck;							// A position marking where to check for ceilings
-	[SerializeField] private Collider2D crouchDisableCollider;				// A collider that will be disabled when crouching
+	[SerializeField] private Transform groundCheck = null;							// A position marking where to check if the player is grounded.
+	[SerializeField] private Transform ceilingCheck = null;							// A position marking where to check for ceilings
+	[SerializeField] private Collider2D crouchDisableCollider = null;				// A collider that will be disabled when crouching
 
 	const float groundedRadius = .3f; // Radius of the overlap circle to determine if grounded
 	const float ceilingRadius = .3f; // Radius of the overlap circle to determine if the player can stand up
