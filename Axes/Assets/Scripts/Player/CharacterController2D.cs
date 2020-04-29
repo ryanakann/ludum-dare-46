@@ -5,9 +5,19 @@ using UnityEngine.Events;
 public class CharacterController2D : Entity
 {
     [Header("Movement")]
-	[SerializeField] public float jumpForce = 400f;                          // Amount of force added when the player jumps.
-	[SerializeField] public float speed = 2f;
-    Timer jump_cooldown = new Timer(0.5f);
+    [SerializeField] public float maxJumpHeight = 1f;
+
+    [Tooltip("How snappy a short hop is compared to a full jump")]
+    [SerializeField] public float lowJumpMultiplier = 4f;
+    [Tooltip("How quickly you fall after the apex of your jump")]
+    [SerializeField] public float fallMultiplier = 2f;
+    [Tooltip("Multiplier independent of above jump parameters")]
+    [SerializeField] public float gravityMultiplier = 1f;
+    [SerializeField] private bool multiplyJumpHeightByScale = false;
+    [SerializeField] private bool divideJumpHeightByMass = false;
+
+	[SerializeField] public float moveSpeed = 2f;
+    private Timer jumpCD = new Timer(0.05f);
 
     SpriteRenderer sr;
 
@@ -40,7 +50,7 @@ public class CharacterController2D : Entity
     [HideInInspector] public bool frozen = false;
     private bool frozenLF;
 
-    [HideInInspector] public int jumpCount;
+    [HideInInspector] public int numTimesJumped;
 
     [Header("SFX")]
     public float footstepFrequencyModifier = 1f;
@@ -64,7 +74,7 @@ public class CharacterController2D : Entity
     protected override void Awake() {
 		base.Awake();
         sr = GetComponent<SpriteRenderer>();
-        jump_cooldown.Reset();
+        jumpCD.Reset();
 		rb = GetComponent<Rigidbody2D>();
 		gravity = Physics2D.gravity;
 		gravityLF = gravity;
@@ -72,7 +82,7 @@ public class CharacterController2D : Entity
 
 		if (OnCrouchEvent == null) OnCrouchEvent = new BoolEvent();
 
-		jumpCount = 0;
+		numTimesJumped = 0;
 
 		anim = GetComponent<Animator>();
 
@@ -123,8 +133,7 @@ public class CharacterController2D : Entity
         }
 	}
 
-    void HandleMovement()
-    {
+    void HandleMovement() {
         anim.SetFloat("x", move);
         velocity = rb.velocity;
 
@@ -147,49 +156,43 @@ public class CharacterController2D : Entity
         //CHECK GRAVITY
         /******************************************************************/
         gravity = Physics2D.gravity * rb.gravityScale;
-        if ((gravityLF - gravity).sqrMagnitude > 0.001f)
-        {
+
+        //Only hard update transform if a certain threshold has passed to prevent jank
+        if ((gravityLF - gravity).sqrMagnitude > 0.001f) {
             //Always face away from gravity
             rb.freezeRotation = false;
             transform.forward = Vector3.forward;
             transform.up = -gravity;
             rb.freezeRotation = true;
+        } else {
+            rb.freezeRotation = true; //When not rotating, this should always be true
         }
-        else
-        {
-            rb.freezeRotation = true;
-        }
-        gravityLF = gravity;
+        gravityLF = gravity; // Record gravity of last frame, as this is the last time gravity is checked in this function
 
         //JUMP MODIFIER
         /******************************************************************/
-        // If not holding down jump and going up
-        if (!grounded && !jumpStay && Vector2.Dot(gravity, velocity) < 0f)
-        {
-            //print("1");
-            rb.gravityScale = 6f;
+        // Moving upwards, and not holding jump
+        if (!grounded && !jumpStay && Vector2.Dot(gravity, velocity) < 0f) {
+            rb.gravityScale = lowJumpMultiplier;
+        } 
+        // Falling
+        else if (!grounded && Vector2.Dot(gravity, velocity) > 0f) {
+            rb.gravityScale = fallMultiplier;
+        } 
+        // Grounded
+        else {
+            rb.gravityScale = 1f;
         }
-        else if (!grounded && Vector2.Dot(gravity, velocity) > 0f)
-        {
-            //print("2");
-            rb.gravityScale = 6f;
-        }
-        else
-        {
-            //print("3");
-            rb.gravityScale = 3f;
-        }
+        rb.gravityScale *= gravityMultiplier;
+
 
         //PLAYER CONTROL
         /******************************************************************/
-        //Only if grounded or airControl is turned on
-        if (grounded || m_AirControl)
-        {
+        //Only allow movement if grounded, or airborne when airControl is turned on
+        if (grounded || m_AirControl) {
             // If crouching
-            if (crouch)
-            {
-                if (!groundedLF)
-                {
+            if (crouch) {
+                if (!groundedLF) {
                     groundedLF = true;
                     OnCrouchEvent.Invoke(true);
                 }
@@ -200,32 +203,28 @@ public class CharacterController2D : Entity
                 // Disable one of the colliders when crouching
                 if (crouchDisableCollider != null)
                     crouchDisableCollider.enabled = false;
-            }
-            else
-            {
+            } else {
                 // Enable the collider when not crouching
                 if (crouchDisableCollider != null)
                     crouchDisableCollider.enabled = true;
 
-                if (groundedLF)
-                {
+                if (groundedLF) {
                     groundedLF = false;
                     OnCrouchEvent.Invoke(false);
                 }
             }
 
-
-            // Move the character by finding the target velocity
+            // Calculate velocity caused by gravity
             gravVelocity = Vector3.Project(velocity, gravity);
 
             right = transform.right;
-            targetVelocity = gravVelocity + right * move * speed;
-            //print("TargetVel: " + targetVelocity + "\tMove: " + move);
-            //Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
+            targetVelocity = gravVelocity + right * move * moveSpeed; //Velocity of player = velocity due to gravity plus orthogonal player input movement
 
-            // And then smoothing it out and applying it to the character
+            // Subtly smooth velocity to prevent jerkiness.
             velocity = Vector3.SmoothDamp(velocity, targetVelocity, ref velocity, m_MovementSmoothing);
 
+            //FOOTSTEPS
+            /******************************************************************/
             float xSpeed = Vector3.Project(velocity, transform.right).magnitude;
             if (footstepAnimationTime > footstepNextThreshold) {
                 footstepNextThreshold += footstepFrequencyModifier;
@@ -239,34 +238,40 @@ public class CharacterController2D : Entity
             anim.SetFloat("speed", xSpeed);
 
             // If the input is moving the player right and the player is facing left...
-            if (move > 0 && !facingRight)
-            {
-                // ... flip the player.
+            if (move > 0 && !facingRight) {
                 Flip();
             }
             // Otherwise if the input is moving the player left and the player is facing right...
-            else if (move < 0 && facingRight)
-            {
-                // ... flip the player.
+            else if (move < 0 && facingRight) {
                 Flip();
             }
         }
 
-
         //JUMP CONTROL
         /******************************************************************/
-        if (grounded && jump && jump_cooldown.Check())
-        {
+        if (grounded && jump && jumpCD.Check()) {
             grounded = false;
 
-            velocity = right * move * speed; // Zero out jump velocity
-            velocity -= (Vector3)gravity.normalized * jumpForce;
+            velocity = right * move * moveSpeed; // Zero out jump velocity
+            float jumpVelocity = Mathf.Sqrt(2.0f * Physics2D.gravity.magnitude * gravityMultiplier * maxJumpHeight);
+            if (multiplyJumpHeightByScale) {
+                if (transform.localScale.y > 0f) {
+                    jumpVelocity *= transform.localScale.y;
+                }
+            }
+            if (divideJumpHeightByMass) {
+                if (rb.mass > 0f) {
+                    jumpVelocity /= rb.mass;
+                }
+            }
+            velocity -= (Vector3)gravity.normalized * jumpVelocity;
 
-            jumpCount++;
+            numTimesJumped++;
 
             anim.SetTrigger("jump");
         }
 
+        //Finally, set velocity
         rb.velocity = velocity;
     }
 
@@ -275,15 +280,10 @@ public class CharacterController2D : Entity
 	}
 
 
-	private void Flip()
-	{
+	private void Flip() {
 		// Switch the way the player is labelled as facing.
 		facingRight = !facingRight;
-
-		// Multiply the player's x local scale by -1.
-		Vector3 theScale = transform.localScale;
-		theScale.x *= -1;
-		transform.localScale = theScale;
+		sr.flipX = !facingRight;
 	}
 
 	private void OnDrawGizmos () {

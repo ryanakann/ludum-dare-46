@@ -142,7 +142,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6425493784521209648}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6040983, y: 2.1597817, z: -10}
+  m_LocalPosition: {x: 6.449471, y: 1.2293594, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6425493785017257417}
@@ -434,11 +434,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b0e714e0ba093f4d85a1b17d9b4f0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scale: 1
   distanceTravelled: 0
   timeAlive: 0
   grounded: 0
-  jumpForce: 10
-  speed: 5
+  maxJumpHeight: 1
+  lowJumpMultiplier: 4
+  fallMultiplier: 2
+  gravityMultiplier: 2
+  multiplyJumpHeightByScale: 1
+  divideJumpHeightByMass: 0
+  moveSpeed: 5
   m_CrouchSpeed: 0.36
   m_MovementSmoothing: 0.05
   m_AirControl: 1
@@ -450,7 +456,7 @@ MonoBehaviour:
   crouchDisableCollider: {fileID: 0}
   locked: 0
   frozen: 0
-  jumpCount: 0
+  numTimesJumped: 0
   footstepFrequencyModifier: 0.5
   OnLandEvent:
     m_PersistentCalls:

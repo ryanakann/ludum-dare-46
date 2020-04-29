@@ -102,7 +102,7 @@ public class GameFunction {
             case Axis.Rotation:
                 return (xTarget.GetComponent<Cinemachine.CinemachineVirtualCamera>() ? xTarget.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.Dutch : xTarget.transform.eulerAngles.z);
             case Axis.Scale:
-                return  (Mathf.Abs(xTarget.transform.localScale.x) + Mathf.Abs(xTarget.transform.localScale.y)) / 2f;
+                return  (xTarget.GetComponent<Entity>() ? xTarget.GetComponent<Entity>().scale : (Mathf.Abs(xTarget.transform.localScale.x) + Mathf.Abs(xTarget.transform.localScale.y)) / 2f);
             case Axis.Distance:
                 Debug.Log("Distance: " + (xTarget.transform.position - yTarget.transform.position).magnitude);
                 return (xTarget.transform.position - yTarget.transform.position).magnitude;
@@ -117,7 +117,7 @@ public class GameFunction {
             case Axis.DistanceTravelled:
                 return (xTarget.GetComponent<Entity>() ? xTarget.GetComponent<Entity>().distanceTravelled : 0f);
             case Axis.JumpCount:
-                return (xTarget.GetComponent<CharacterController2D>() ? xTarget.GetComponent<CharacterController2D>().jumpCount : 0);
+                return (xTarget.GetComponent<CharacterController2D>() ? xTarget.GetComponent<CharacterController2D>().numTimesJumped : 0);
             case Axis.Grounded:
                 return (xTarget.GetComponent<Entity>() ? (xTarget.GetComponent<Entity>().grounded ? 1f : 0f) : 0f);
             case Axis.TimeElapsed:
@@ -138,7 +138,7 @@ public class GameFunction {
                 //print("Speed: " + xTarget.GetComponent<Rigidbody2D>().velocity.magnitude);
                 return (xTarget.GetComponent<Rigidbody2D>() ? xTarget.GetComponent<Rigidbody2D>().velocity.magnitude : 0f);
             case Axis.JumpHeight:
-                return (xTarget.GetComponent<CharacterController2D>() ? xTarget.GetComponent<CharacterController2D>().jumpForce : 1f);
+                return (xTarget.GetComponent<CharacterController2D>() ? xTarget.GetComponent<CharacterController2D>().maxJumpHeight : 1f);
             case Axis.Visibility:
                 return (xTarget.GetComponent<SpriteRenderer>() ? xTarget.GetComponent<SpriteRenderer>().color.a : 1f);
             case Axis.InputDelay:
@@ -201,7 +201,11 @@ public class GameFunction {
                 if (yTarget.GetComponent<Cinemachine.CinemachineVirtualCamera>()) {
                     yTarget.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize = val;
                 } else {
-                    yTarget.transform.localScale = SmoothVector(yTarget.transform.localScale, Vector3.one * val);
+                    if (yTarget.GetComponent<Entity>()) {
+                        yTarget.GetComponent<Entity>().scale = SmoothFloat(yTarget.GetComponent<Entity>().scale, val);
+                    } else {
+                        yTarget.transform.localScale = SmoothVector(yTarget.transform.localScale, Vector3.one * val);
+                    }
                 }
                 break;
             case Axis.Distance:
@@ -249,12 +253,12 @@ public class GameFunction {
                 break;
             case Axis.Speed:
                 if (yTarget.GetComponent<CharacterController2D>()) {
-                    yTarget.GetComponent<CharacterController2D>().speed = SmoothFloat(yTarget.GetComponent<CharacterController2D>().speed, val);
+                    yTarget.GetComponent<CharacterController2D>().moveSpeed = SmoothFloat(yTarget.GetComponent<CharacterController2D>().moveSpeed, val);
                 }
                 break;
             case Axis.JumpHeight:
                 if (yTarget.GetComponent<CharacterController2D>()) {
-                    yTarget.GetComponent<CharacterController2D>().jumpForce = SmoothFloat(yTarget.GetComponent<CharacterController2D>().jumpForce, val);
+                    yTarget.GetComponent<CharacterController2D>().maxJumpHeight = SmoothFloat(yTarget.GetComponent<CharacterController2D>().maxJumpHeight, val);
                 }
                 break;
             case Axis.Visibility:
