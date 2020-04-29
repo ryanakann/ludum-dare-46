@@ -30,7 +30,7 @@ public class Entity : MonoBehaviour {
         positionLF = transform.position;
 
         //Scale proportionally to the base scale
-        transform.localScale = Vector3.SmoothDamp(transform.localScale, baseScale * scale, ref scaleRef, 0.02f);
+        transform.localScale = Vector3.SmoothDamp(transform.localScale, baseScale * scale, ref scaleRef, 0.02f); 
     }
 
     protected virtual void FixedUpdate () {

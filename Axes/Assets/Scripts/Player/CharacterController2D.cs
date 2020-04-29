@@ -18,7 +18,7 @@ public class CharacterController2D : Entity
 
 	[SerializeField] public float moveSpeed = 2f;
     private Timer jumpCD = new Timer(0.05f);
-
+ 
     SpriteRenderer sr;
 
 	[Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;			// Amount of maxSpeed applied to crouching movement. 1 = 100%
@@ -94,7 +94,7 @@ public class CharacterController2D : Entity
 		bool wasGrounded = grounded;
 		grounded = false;
 
-        groundCheck.position = new Vector2(groundCheck.position.x, sr.bounds.center.y - sr.bounds.extents.y + groundedRadius);
+        // groundCheck.position = new Vector2(groundCheck.position.x, sr.bounds.center.y - sr.bounds.extents.y + groundedRadius);
 
 		// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
 		// This can be done using layers instead but Sample Assets will not overwrite your project settings.
