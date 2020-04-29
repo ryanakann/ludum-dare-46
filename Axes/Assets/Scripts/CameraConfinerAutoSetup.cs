@@ -8,6 +8,14 @@ public class CameraConfinerAutoSetup : MonoBehaviour {
     private CinemachineConfiner confiner;
     private new PolygonCollider2D collider;
     private void OnValidate () {
+        Setup();
+    }
+
+    private void Start () {
+        Setup();
+    }
+
+    private void Setup () {
         if (confiner == null) {
             confiner = GetComponent<CinemachineConfiner>();
         }

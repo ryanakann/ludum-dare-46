@@ -409,7 +409,7 @@ Rigidbody2D:
   m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 2
 --- !u!114 &6425493785205248293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,11 +438,11 @@ MonoBehaviour:
   distanceTravelled: 0
   timeAlive: 0
   grounded: 0
-  maxJumpHeight: 1
-  lowJumpMultiplier: 4
+  maxJumpHeight: 2
+  lowJumpMultiplier: 3
   fallMultiplier: 2
-  gravityMultiplier: 2
-  multiplyJumpHeightByScale: 1
+  gravityMultiplier: 3
+  multiplyJumpHeightByScale: 0
   divideJumpHeightByMass: 0
   moveSpeed: 5
   m_CrouchSpeed: 0.36
