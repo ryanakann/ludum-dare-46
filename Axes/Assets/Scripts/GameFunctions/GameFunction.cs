@@ -85,7 +85,7 @@ public class GameFunction {
     }
 
     private float GetVar (Axis x) {
-        if (xTarget == null) return 0f;
+        Debug.Log(x);
         switch (x) {
             case Axis.XPosition:
                 return xTarget.transform.position.x;
@@ -150,7 +150,9 @@ public class GameFunction {
             case Axis.GameFrameRate:
                 return 1f / Time.deltaTime;
             case Axis.GameGravityRotation:
-                return Mathf.Atan2(Physics2D.gravity.y, Physics2D.gravity.x);
+                float rot = Mathf.Atan2(Physics2D.gravity.y, Physics2D.gravity.x) * Mathf.Rad2Deg;
+                Debug.Log(rot);
+                return rot;
             case Axis.GameGravityScale:
                 return Physics.gravity.magnitude;
             case Axis.GameMusicPitch:
@@ -283,7 +285,7 @@ public class GameFunction {
                 break;
             case Axis.GameGravityRotation:
                 float gravMag = Physics2D.gravity.magnitude;
-                Debug.Log("Gravity: " + Physics2D.gravity);
+                // Debug.Log("Gravity: " + Physics2D.gravity);
                 targetVector = Quaternion.Euler(0, 0, val) * Vector2.down * gravMag;
                 //targetVector = new Vector2(Mathf.Cos(val * Mathf.Deg2Rad), Mathf.Sin(val * Mathf.Deg2Rad)) * gravMag;
                 Physics2D.gravity = SmoothVector(Physics2D.gravity, targetVector);
@@ -302,7 +304,6 @@ public class GameFunction {
     }
 
     public void HandleFunction () {
-        if (xTarget == null) return;
         float xi = GetVar(x);
         float xNorm = Mathf.InverseLerp(xRange.x, xRange.y, xi);
         float yNorm = function.Evaluate(xNorm);

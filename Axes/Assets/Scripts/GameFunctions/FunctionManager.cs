@@ -6,7 +6,7 @@ public class FunctionManager : MonoBehaviour {
     public GameFunction[] functions;
 
     private void Awake () {
-        Physics2D.gravity = Vector2.down * -9.81f;
+        Physics2D.gravity = Vector2.down * 9.81f;
     }
 
     private void Update () {
