@@ -10,6 +10,7 @@ public class FunctionManager : MonoBehaviour {
     }
 
     private void Update () {
+        print("Gravity: " + Physics2D.gravity);
         foreach (var function in functions) {
             function.HandleFunction();
         }
