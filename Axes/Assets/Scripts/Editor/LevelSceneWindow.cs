@@ -58,9 +58,10 @@ public class LevelSceneWindow : EditorWindow {
             Debug.Log(newName + " created at " + newPath);
         } catch {
             Debug.Log(newPath + " already exists!");
-            EditorSceneManager.OpenScene(newPath);
         }
-
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+        EditorSceneManager.OpenScene(newPath, OpenSceneMode.Single);
         Close();
     }
 }
