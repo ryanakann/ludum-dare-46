@@ -1,7 +1,58 @@
 fileFormatVersion: 2
 guid: 1646fe60b185ac4438172b0a852abd05
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -6189170108890124637
+    second: Door_Key
+  - first:
+      213: -6393793891576062678
+    second: Door_Switch_Closed
+  - first:
+      213: -6808142197076344849
+    second: Door_Switch_Open
+  - first:
+      213: -1691494498027075375
+    second: Spring_Top
+  - first:
+      213: 7709889232541926771
+    second: Button_Top
+  - first:
+      213: 8262481476101987255
+    second: Spring_Mid
+  - first:
+      213: -4911051119094072434
+    second: Button_Mid
+  - first:
+      213: -2641475368832530210
+    second: Button_Bot
+  - first:
+      213: 6998282668771581597
+    second: Spring_Bot
+  - first:
+      213: -7923762704557141133
+    second: Keypad
+  - first:
+      213: 3977480703895925306
+    second: Key
+  - first:
+      213: -7751468989498543630
+    second: Lever_Right
+  - first:
+      213: 8599430857695229007
+    second: Ball
+  - first:
+      213: 975907792848594234
+    second: Platform_OneWay
+  - first:
+      213: 3020164952920501029
+    second: Lever_Left
+  - first:
+      213: 8545703524756141046
+    second: Spikes
+  - first:
+      213: -4837286107579370842
+    second: Spike
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -40,7 +91,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -71,9 +122,390 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Door_Key
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 338
+        width: 245
+        height: 459
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ae632dd396ab1aa0800000000000000
+      internalID: -6189170108890124637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door_Switch_Closed
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 338
+        width: 245
+        height: 459
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2ddb85d45ea447a0800000000000000
+      internalID: -6393793891576062678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door_Switch_Open
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 338
+        width: 245
+        height: 459
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fefbaea2ebe9481a0800000000000000
+      internalID: -6808142197076344849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring_Top
+      rect:
+        serializedVersion: 2
+        x: 1201
+        y: 581
+        width: 205
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d8819947ba9688e0800000000000000
+      internalID: -1691494498027075375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button_Top
+      rect:
+        serializedVersion: 2
+        x: 893
+        y: 452
+        width: 246
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 375454388670ffa60800000000000000
+      internalID: 7709889232541926771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring_Mid
+      rect:
+        serializedVersion: 2
+        x: 1230
+        y: 391
+        width: 135
+        height: 162
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bbdd42402b3aa270800000000000000
+      internalID: 8262481476101987255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button_Mid
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 400
+        width: 176
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8bfc9ce60178dbb0800000000000000
+      internalID: -4911051119094072434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button_Bot
+      rect:
+        serializedVersion: 2
+        x: 866
+        y: 344
+        width: 300
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed80bcda528975bd0800000000000000
+      internalID: -2641475368832530210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring_Bot
+      rect:
+        serializedVersion: 2
+        x: 1201
+        y: 344
+        width: 205
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9e17ed3205ee1160800000000000000
+      internalID: 6998282668771581597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Keypad
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 186
+        width: 57
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37312665dc3290290800000000000000
+      internalID: -7923762704557141133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Key
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 188
+        width: 133
+        height: 65
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a32ffa860a9d23730800000000000000
+      internalID: 3977480703895925306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lever_Right
+      rect:
+        serializedVersion: 2
+        x: 412
+        y: 155
+        width: 158
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f1bb79e5004d6490800000000000000
+      internalID: -7751468989498543630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ball
+      rect:
+        serializedVersion: 2
+        x: 634
+        y: 137
+        width: 151
+        height: 151
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f44f477adc0575770800000000000000
+      internalID: 8599430857695229007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform_OneWay
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 230
+        width: 298
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a35a64e87fe1b8d00800000000000000
+      internalID: 975907792848594234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lever_Left
+      rect:
+        serializedVersion: 2
+        x: 412
+        y: 11
+        width: 155
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52b29ede508c9e920800000000000000
+      internalID: 3020164952920501029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spikes
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 4
+        width: 162
+        height: 152
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f3b4e42410789670800000000000000
+      internalID: 8545703524756141046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spike
+      rect:
+        serializedVersion: 2
+        x: 1092
+        y: 0
+        width: 50
+        height: 152
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a2bcc80ae18edcb0800000000000000
+      internalID: -4837286107579370842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
