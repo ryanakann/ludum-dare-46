@@ -27,7 +27,7 @@ public class PressureButton : MonoBehaviour {
 
     private void Update () {
         currentDistance = top.localPosition.y;
-        print($"Distance: {currentDistance} - Threshold: {thresholdDistance}");
+        // print($"Distance: {currentDistance} - Threshold: {thresholdDistance}");
         if (!pressed && currentDistance < thresholdDistance - Mathf.Epsilon) {
             pressed = true;
             OnButtonDown.Invoke();
