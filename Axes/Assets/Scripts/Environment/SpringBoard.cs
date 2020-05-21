@@ -55,7 +55,7 @@ public class SpringBoard : MonoBehaviour {
                 }
             }    
         } else {
-            print($"Force: {Vector2.Dot(springJoint.reactionForce, top.position - springInitialPosition)} - Threshold: {springThreshold}");
+            // print($"Force: {Vector2.Dot(springJoint.reactionForce, top.position - springInitialPosition)} - Threshold: {springThreshold}");
         }
         
         //Prevent double launches
