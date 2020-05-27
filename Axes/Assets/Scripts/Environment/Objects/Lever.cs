@@ -35,7 +35,7 @@ public class Lever : MonoBehaviour {
     }
 
     private void Update () {
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetKeyDown(KeyCode.E) && Vector2.SqrMagnitude(FindObjectOfType<CharacterController2D>().transform.position-transform.position) < 1f) {
             if (FacingRight()) {
                 currentDirection = Direction.Left;        
                 OnLeverLeft.Invoke();
