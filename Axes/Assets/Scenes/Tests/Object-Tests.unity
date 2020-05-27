@@ -2497,6 +2497,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 2.0493598
       objectReference: {fileID: 0}
+    - target: {fileID: 6425493784521209662, guid: ff3ac0bf50202f440b1fea0fd87919ec,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 1281
+      objectReference: {fileID: 0}
     - target: {fileID: 6425493785017257417, guid: ff3ac0bf50202f440b1fea0fd87919ec,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2928,6 +2933,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_UsedByEffector
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8293907910744139986, guid: 9fe0b93be3050c54c8b050496c5572bb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fe0b93be3050c54c8b050496c5572bb, type: 3}
