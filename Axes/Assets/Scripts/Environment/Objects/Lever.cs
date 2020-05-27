@@ -36,13 +36,15 @@ public class Lever : MonoBehaviour {
 
     private void Update () {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            if (currentDirection == Direction.Right) {
-                currentDirection = Direction.Left;
+            if (FacingRight()) {
+                currentDirection = Direction.Left;        
+                OnLeverLeft.Invoke();
             } else {
                 currentDirection = Direction.Right;
+                OnLeverRight.Invoke();
             }
             if (!transitioning) {
-
+                transitioning = true;
                 StartCoroutine(TransitionCR());
             }
         }
@@ -52,7 +54,6 @@ public class Lever : MonoBehaviour {
         float t = FacingRight() ? 0f : 1f;
         bool finished = false;
         while (!finished) {
-            print("t: " + t);
             pivot.eulerAngles = Vector3.Lerp(leftRotation, rightRotation, tween.Evaluate(t));
             t += Time.deltaTime / transitionDuration * (FacingRight() ? 1 : -1);
             finished = (FacingRight() ? t >= 1f : t <= 0f);
@@ -65,15 +66,6 @@ public class Lever : MonoBehaviour {
     private bool FacingRight () {
         return currentDirection == Direction.Right;
     }
-
-    public bool GetDirection () {
-        if (transitioning) {
-            return !FacingRight();
-        } else {
-            return FacingRight();
-        }
-    }
-
 
     public enum Direction {
         Left,
