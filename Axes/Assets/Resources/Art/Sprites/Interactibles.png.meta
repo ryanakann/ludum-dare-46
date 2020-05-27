@@ -53,6 +53,15 @@ TextureImporter:
   - first:
       213: -4837286107579370842
     second: Spike
+  - first:
+      213: -832831300405707574
+    second: Platform
+  - first:
+      213: -6367957571080338573
+    second: Lever_Handle
+  - first:
+      213: -994948445994175610
+    second: Lever_Base
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -426,10 +435,10 @@ TextureImporter:
       name: Platform_OneWay
       rect:
         serializedVersion: 2
-        x: 867
+        x: 903
         y: 230
-        width: 298
-        height: 70
+        width: 225
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -502,6 +511,69 @@ TextureImporter:
       bones: []
       spriteID: 6a2bcc80ae18edcb0800000000000000
       internalID: -4837286107579370842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform
+      rect:
+        serializedVersion: 2
+        x: 1201
+        y: 249
+        width: 225
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: accbd7548503174f0800000000000000
+      internalID: -832831300405707574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lever_Handle
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 20
+        width: 93
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3734ff6f35870a7a0800000000000000
+      internalID: -6367957571080338573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lever_Base
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 11
+        width: 145
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 683b0bae8ab3132f0800000000000000
+      internalID: -994948445994175610
       vertices: []
       indices: 
       edges: []
