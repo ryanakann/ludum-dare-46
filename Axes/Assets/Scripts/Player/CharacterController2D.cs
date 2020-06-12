@@ -34,7 +34,8 @@ public class CharacterController2D : Entity
 	const float groundedRadius = .3f; // Radius of the overlap circle to determine if grounded
 	const float ceilingRadius = .3f; // Radius of the overlap circle to determine if the player can stand up
 	private Rigidbody2D rb;
-	private bool facingRight = true;  // For determining which way the player is currently facing.
+	[SerializeField]
+    private bool facingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 velocity = Vector3.zero;
 
 	private Vector3 gravVelocity;
@@ -139,14 +140,11 @@ public class CharacterController2D : Entity
 
         //CHECK CROUCH
         /******************************************************************/
-        if (!crouch)
-        {
+        if (!crouch) {
             // If the character has a ceiling preventing them from standing up, keep them crouching
             Collider2D[] colls = Physics2D.OverlapCircleAll(ceilingCheck.position, ceilingRadius, groundLayer);
-            foreach (Collider2D c in colls)
-            {
-                if (!c.isTrigger)
-                {
+            foreach (Collider2D c in colls) {
+                if (!c.isTrigger) {
                     crouch = true;
                     break;
                 }
@@ -283,7 +281,7 @@ public class CharacterController2D : Entity
 	private void Flip() {
 		// Switch the way the player is labelled as facing.
 		facingRight = !facingRight;
-		sr.flipX = !facingRight;
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
 	}
 
 	private void OnDrawGizmos () {
