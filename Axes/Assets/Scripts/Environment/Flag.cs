@@ -6,18 +6,19 @@ public class Flag : MonoBehaviour {
 
     public SceneTransition sceneTransition;
 
-    private void OnTriggerEnter2D (Collider2D collision) {
+    private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.CompareTag("Player")) {
 
             collision.GetComponent<CharacterController2D>().enabled = false;
             collision.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             collision.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             collision.GetComponent<Animator>().SetTrigger("jump");
+            GetComponent<AudioSource>().Play();
             StartCoroutine(TwistAndShout(collision.GetComponent<SpriteRenderer>().material, collision.transform));
         }
     }
 
-    IEnumerator TwistAndShout (Material mat, Transform trans) {
+    IEnumerator TwistAndShout(Material mat, Transform trans) {
         float maxDuration = 1f;
         float t = 0f;
         Vector3 startScale = trans.localScale;
