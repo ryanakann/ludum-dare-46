@@ -9,35 +9,35 @@ namespace HutongGames.PlayMaker.Actions
     public class SetGravity2dScale : ComponentAction<Rigidbody2D>
 	{
 		[RequiredField]
-		[CheckForComponent(typeof(Rigidbody2D))]
-		[Tooltip("The GameObject with a Rigidbody 2d attached")]
-		public FsmOwnerDefault gameObject;
-
-		[RequiredField]
 		[Tooltip("The gravity scale effect")]
 		public FsmFloat gravityScale;
+
+		[Tooltip("Set gravity every frame")]
+		public FsmBool everyFrame;
 		
-		public override void Reset()
+		public override void OnEnter() 
 		{
-			gameObject = null;
-			gravityScale = 1f;
+			gravityScale.Value = Mathf.Clamp(gravityScale.Value, 0f, float.PositiveInfinity);
 		}
-		
-		public override void OnEnter()
+
+		public override void OnUpdate()
 		{
 			DoSetGravityScale();
-			Finish();
+
+			if (!everyFrame.Value)
+				Finish();
 		}
 		
 		void DoSetGravityScale()
-		{
-			var go = Fsm.GetOwnerDefaultTarget(gameObject);
-            if (!UpdateCache(go))
-            {
-                return;
-            }
-			
-			rigidbody2d.gravityScale = gravityScale.Value;
+		{	
+			Debug.Log("Unga bunga");
+			if (gravityScale.Value != Physics2D.gravity.magnitude) {
+				Vector2 grav = Physics2D.gravity.normalized;
+				if (grav.y > 0f) {
+					grav *= -1f;
+				}
+				Physics2D.gravity = grav * gravityScale.Value;
+			}
 		}
 	}
 }
