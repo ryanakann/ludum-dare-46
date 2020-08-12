@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Timeline;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class CharacterController2D : MonoBehaviour
+public class CharacterController2DJank : MonoBehaviour
 {
     #region STATS
     public class StatModifiers
@@ -71,22 +71,18 @@ public class CharacterController2D : MonoBehaviour
 
     #region LOCAL VARIABLES
     private bool grounded;
-    private Vector2 groundedCheckCenter;
-    private Vector2 groundedCheckSize;
 
     private Vector2 gravity;
     private Vector2 gravityLF;
-    private float gravityScale;
     private Vector3 transformUpSmoothing;
 
-    private float y;
     private Vector2 velocity;
-    private Vector2 velocitySmoothing;
     private Vector2 up;
     private Vector2 right;
     private Vector2 upVelocity;
     private Vector2 rightVelocity;
-    private Vector2 targetVelocity;
+
+    private float rotationSmoothing;
     
     private Vector3 baseLocalScale;
     private Vector3 localScaleSmoothing;
@@ -102,8 +98,10 @@ public class CharacterController2D : MonoBehaviour
     private void Awake()
     {
         stats = new StatModifiers();
-        
+        stats.overrideGravity = false;
         rb = GetComponent<Rigidbody2D>();
+        rb.freezeRotation = false;
+
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         
         grounded = false;
@@ -128,25 +126,12 @@ public class CharacterController2D : MonoBehaviour
 
         //Gravity and Rotation
         gravity = stats.overrideGravity ? stats.gravityDirection.normalized * stats.gravityScale : Physics2D.gravity;
-        gravityScale = gravity.magnitude;
-        if (Vector2.Angle(gravity, gravityLF) < 1f)
-        {
-            rb.freezeRotation = true;
-        }
-        else
-        {
-            rb.freezeRotation = false;
-            transform.up = Vector3.SmoothDamp(transform.up, -gravity.normalized, ref transformUpSmoothing, 0.01f);
-            transform.forward = Vector3.forward;
-        }
-        up = transform.up;
-        right = transform.right;
-        gravityLF = gravity;
+        float angle = Mathf.Atan2(gravity.y, gravity.x);
+        transform.eulerAngles = Vector3.forward * Mathf.SmoothDamp(transform.eulerAngles.z, angle, ref rotationSmoothing, 0.01f);
 
         bool falling = Vector2.Dot(rb.velocity, up) < 0;
         upVelocity = Vector3.Project(rb.velocity, up);
         rightVelocity = right * (x * baseSpeed * stats.speedMultiplier);
-        //print($"right: {right} - x: {x} - baseSpeed: {baseSpeed} - speedMultiplier: {stats.speedMultiplier}");
         if (jumpDown)
         {
             
@@ -168,7 +153,6 @@ public class CharacterController2D : MonoBehaviour
             }
         }
         velocity = rightVelocity + upVelocity;
-        print(velocity);
         rb.velocity = velocity;
     }
 }
