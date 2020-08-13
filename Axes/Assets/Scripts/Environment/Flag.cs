@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Flag : MonoBehaviour {
 
+    private bool triggered = false;
+
     public SceneTransition sceneTransition;
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag("Player")) {
-
+        if (!triggered && collision.CompareTag("Player")) {
+            triggered = true;
             collision.GetComponent<CharacterController2D>().enabled = false;
             collision.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             collision.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
