@@ -2,37 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats
+public class PlayerStats : MonoBehaviour
 {
-    public bool enabled;
-    public bool stunned;
+    public new bool enabled = true;
+    public bool stunned = false;
 
-    public float speedMultiplier;
+    [Range(0f, 20f)]
+    public float speedMultiplier = 1f;
 
-    public bool overrideGravity;
-    public Vector2 gravityDirection;
-    public float gravityScale;
+    public bool overrideGravity = false;
+    public Vector2 gravityDirection = Vector2.down;
+    [Range(0f, 20f)]
+    public float gravityScale = 9.81f;
 
-    public float scaleMultiplier;
-    public float jumpHeightMultiplier;
-    public float jumpTimeMultiplier;
+    [Range(0f, 20f)]
+    public float scaleMultiplier = 1f;
+    [Range(0f, 20f)]
+    public float jumpHeightMultiplier = 1f;
 
     /// <summary>
     /// Drives both scale and jump
     /// </summary>
-    public float chonkMultiplier;
+    [Range(0f, 20f)]
+    public float chonkMultiplier = 1f;
 
-    public PlayerStats()
+    private void FixedUpdate()
     {
-        enabled = true;
-        stunned = false;
-        speedMultiplier = 1f;
-        overrideGravity = true;
-        gravityDirection = Vector2.down;
-        gravityScale = 9.81f;
-        scaleMultiplier = 1f;
-        jumpHeightMultiplier = 1f;
-        jumpTimeMultiplier = 1f;
-        chonkMultiplier = 1f;
+        gravityDirection.Normalize();
     }
 }

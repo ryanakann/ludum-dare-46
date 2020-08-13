@@ -384,6 +384,7 @@ GameObject:
   - component: {fileID: 857579938}
   - component: {fileID: 857579939}
   - component: {fileID: 857579947}
+  - component: {fileID: 857579941}
   - component: {fileID: 857579946}
   - component: {fileID: 857579945}
   - component: {fileID: 857579944}
@@ -404,7 +405,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 857579937}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.94, y: -0.999, z: 0}
+  m_LocalPosition: {x: 1, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 808859545}
@@ -471,6 +472,27 @@ PolygonCollider2D:
       - {x: 0.14002985, y: 1.083776}
       - {x: 0.37404484, y: 1.1514457}
       - {x: 0.7138615, y: 1.2357324}
+--- !u!114 &857579941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857579937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f21178356859a47be72db8f67bb61a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabled: 1
+  stunned: 0
+  speedMultiplier: 1
+  overrideGravity: 0
+  gravityDirection: {x: 0, y: -1}
+  gravityScale: 9.81
+  scaleMultiplier: 1
+  jumpHeightMultiplier: 1
+  chonkMultiplier: 1
 --- !u!114 &857579943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -528,14 +550,15 @@ MonoBehaviour:
   lowJumpMultiplier: 3
   fallMultiplier: 2
   gravityMultiplier: 3
-  baseMoveSpeed: 2
+  baseMoveSpeed: 8
   movementSmoothing: 0.05
-  airControl: 0
+  airControl: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
+  stats: {fileID: 0}
   groundCheck: {fileID: 2206432947755703523}
-  sr: {fileID: 0}
+  sr: {fileID: 808859546}
   rb: {fileID: 857579947}
   anim: {fileID: 857579939}
   footstepFrequencyModifier: 0.5
@@ -2456,7 +2479,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2206432946117733661}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.457022, y: 1.2293596, z: -10}
+  m_LocalPosition: {x: 6.454548, y: 1.2293596, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2206432947637196772}
@@ -2726,7 +2749,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2206432947166591552}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.946, y: 0.23199993, z: -10}
+  m_LocalPosition: {x: 1.006, y: 0.73099995, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2206432946827017238}
@@ -2902,6 +2925,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
+  stats: {fileID: 0}
   groundCheck: {fileID: 2206432947755703523}
   sr: {fileID: 0}
   rb: {fileID: 0}
