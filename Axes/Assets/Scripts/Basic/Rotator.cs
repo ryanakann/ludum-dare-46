@@ -4,9 +4,22 @@ using UnityEngine;
 public class Rotator : MonoBehaviour
 {
     [HideInInspector]
-    public float smooth_speed = 0.1f;
-#pragma warning disable CS0649
+    public float smooth_speed = 5f;
     UnityEngine.GameObject target;
+
+    [HideInInspector]
+    public Vector3 aim_offset = Vector3.up;
+    Quaternion _facing;
+
+    public void Start()
+    {
+        Init();
+    }
+
+    public void Init()
+    {
+        _facing = Quaternion.LookRotation(transform.TransformDirection(-aim_offset));
+    }
 
     public void Face(UnityEngine.GameObject target, bool lockX = true, bool lockY = true, bool lockZ = true)
     {
@@ -22,7 +35,7 @@ public class Rotator : MonoBehaviour
 
         if (stop) StopAllCoroutines();
         transform.rotation = Quaternion.Slerp(transform.rotation,
-            Quaternion.LookRotation(dir), smooth_speed);
+            Quaternion.LookRotation(dir) * _facing, smooth_speed);
 
         transform.rotation = new Quaternion((lockX) ? x : transform.rotation.x,
                                             (lockY) ? y : transform.rotation.y,
@@ -45,7 +58,7 @@ public class Rotator : MonoBehaviour
     private IEnumerator TurnToCo(Vector3 direction, bool lockX = true, bool lockY = true, bool lockZ = true, bool follow = false)
     {
         Quaternion to = Quaternion.LookRotation(direction);
-        Quaternion from = transform.rotation;
+        Quaternion from = Quaternion.LookRotation(transform.TransformDirection(-aim_offset));
         Vector3 diff = new Vector3(
             (lockX) ? 0 : to.x - from.x,
             (lockY) ? 0 : to.y - from.y,
