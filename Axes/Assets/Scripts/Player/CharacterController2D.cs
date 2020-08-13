@@ -13,45 +13,26 @@ public class CharacterController2D : Entity
     [SerializeField] public float fallMultiplier = 2f;
     [Tooltip("Multiplier independent of above jump parameters")]
     [SerializeField] public float gravityMultiplier = 1f;
-    [SerializeField] private bool multiplyJumpHeightByScale = false;
-    [SerializeField] private bool divideJumpHeightByMass = false;
-
-	[SerializeField] public float moveSpeed = 2f;
+	[SerializeField] public float baseMoveSpeed = 2f;
     private Timer jumpCD = new Timer(0.05f);
  
-    SpriteRenderer sr;
-
-	[Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;			// Amount of maxSpeed applied to crouching movement. 1 = 100%
-	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
-	[SerializeField] private bool m_AirControl = false;							// Whether or not a player can steer while jumping;
+	[Range(0, 0.3f)] [SerializeField] private float movementSmoothing = 0.05f;	// How much to smooth out the movement
+	[SerializeField] private bool airControl = false;							// Whether or not a player can steer while jumping;
 	[SerializeField] private LayerMask groundLayer = 1;							// A mask determining what is ground to the character
 
     [Header("References")]
-	[SerializeField] private Transform groundCheck = null;							// A position marking where to check if the player is grounded.
-	[SerializeField] private Transform ceilingCheck = null;							// A position marking where to check for ceilings
-	[SerializeField] private Collider2D crouchDisableCollider = null;				// A collider that will be disabled when crouching
+    [SerializeField]
+    public PlayerStats stats;
+	[SerializeField] 
+    private Transform groundCheck = null;							// A position marking where to check if the player is grounded.
+    [SerializeField]
+    private SpriteRenderer sr;
+    [SerializeField]
+    private Rigidbody2D rb;
+    [SerializeField]
+    private Animator anim;
 
-	const float groundedRadius = .3f; // Radius of the overlap circle to determine if grounded
-	const float ceilingRadius = .3f; // Radius of the overlap circle to determine if the player can stand up
-	private Rigidbody2D rb;
-	[SerializeField]
-    private bool facingRight = true;  // For determining which way the player is currently facing.
-	private Vector3 velocity = Vector3.zero;
-
-	private Vector3 gravVelocity;
-	private Vector2 gravity;
-	private Vector2 gravityLF;
-	private Vector3 right;
-	private Vector3 targetVelocity;
-
-	private Animator anim;
-
-    [HideInInspector] public bool locked = false;
-    private bool lockedLF;
-    [HideInInspector] public bool frozen = false;
-    private bool frozenLF;
-
-    [HideInInspector] public int numTimesJumped;
+    const float groundedRadius = .3f; // Radius of the overlap circle to determine if grounded
 
     [Header("SFX")]
     public float footstepFrequencyModifier = 1f;
@@ -60,33 +41,42 @@ public class CharacterController2D : Entity
 
 	[Header("Events")]
 	[Space]
-
 	public UnityEvent OnLandEvent;
 
-	[System.Serializable]
-	public class BoolEvent : UnityEvent<bool> { }
 
-	public BoolEvent OnCrouchEvent;
-	private bool groundedLF = false;
-
-    float move; bool crouch; bool jump; bool jumpStay;
-
+    #region LOCAL VARIABLES
+    
+    private Vector3 velocity;
+    private Vector3 gravVelocity;
+    private Vector2 gravity;
+    private Vector2 gravityLF;
+    private Vector3 right;
+    private Vector3 targetVelocity;
+    private float move; private bool crouch; private bool jumpDown; private bool jumpStay;
+    private bool groundedLF = false;
+    private bool facingRight;
+    
+    #endregion
 
     protected override void Awake() {
 		base.Awake();
-        sr = GetComponent<SpriteRenderer>();
+        
+        //Component References
+        if (sr == null) sr = GetComponent<SpriteRenderer>();
+		if (rb == null) rb = GetComponent<Rigidbody2D>();
+        if (anim == null) anim = GetComponent<Animator>();
+
+        //Events
+        if (OnLandEvent == null) OnLandEvent = new UnityEvent();
+
+        //Jump
         jumpCD.Reset();
-		rb = GetComponent<Rigidbody2D>();
-		gravity = Physics2D.gravity;
+		
+        //Gravity
+        gravity = Physics2D.gravity;
 		gravityLF = gravity;
-		if (OnLandEvent == null)OnLandEvent = new UnityEvent();
 
-		if (OnCrouchEvent == null) OnCrouchEvent = new BoolEvent();
-
-		numTimesJumped = 0;
-
-		anim = GetComponent<Animator>();
-
+        //Footsteps
         footstepAnimationTime = 0f;
         footstepNextThreshold = footstepFrequencyModifier;
 	}
@@ -108,28 +98,27 @@ public class CharacterController2D : Entity
 		}
 		anim.SetBool("grounded", grounded);
 
-        if (!frozen) {
+        if (stats.enabled) {
             rb.constraints = RigidbodyConstraints2D.None;
-            HandleMovement();
+
+            if (!stats.stunned)
+            {
+                HandleMovement();
+            }
         } else {
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
         }
-
-        frozenLF = frozen;
-        lockedLF = locked;
 	}
 
 
-	public void Move(float move, bool crouch, bool jump, bool jumpStay) {
-        if (locked) {
+	public void Move(float move, bool jumpDown, bool jumpStay) {
+        if (stats.stunned) {
             this.move = 0f;
-            this.crouch = false;
-            this.jump = false;
+            this.jumpDown = false;
             this.jumpStay = false;
         } else {
             this.move = move;
-            this.crouch = crouch;
-            this.jump = jump;
+            this.jumpDown = jumpDown;
             this.jumpStay = jumpStay;
         }
 	}
@@ -137,19 +126,6 @@ public class CharacterController2D : Entity
     void HandleMovement() {
         anim.SetFloat("x", move);
         velocity = rb.velocity;
-
-        //CHECK CROUCH
-        /******************************************************************/
-        if (!crouch) {
-            // If the character has a ceiling preventing them from standing up, keep them crouching
-            Collider2D[] colls = Physics2D.OverlapCircleAll(ceilingCheck.position, ceilingRadius, groundLayer);
-            foreach (Collider2D c in colls) {
-                if (!c.isTrigger) {
-                    crouch = true;
-                    break;
-                }
-            }
-        }
 
         //CHECK GRAVITY
         /******************************************************************/
@@ -187,39 +163,15 @@ public class CharacterController2D : Entity
         //PLAYER CONTROL
         /******************************************************************/
         //Only allow movement if grounded, or airborne when airControl is turned on
-        if (grounded || m_AirControl) {
-            // If crouching
-            if (crouch) {
-                if (!groundedLF) {
-                    groundedLF = true;
-                    OnCrouchEvent.Invoke(true);
-                }
-
-                // Reduce the speed by the crouchSpeed multiplier
-                move *= m_CrouchSpeed;
-
-                // Disable one of the colliders when crouching
-                if (crouchDisableCollider != null)
-                    crouchDisableCollider.enabled = false;
-            } else {
-                // Enable the collider when not crouching
-                if (crouchDisableCollider != null)
-                    crouchDisableCollider.enabled = true;
-
-                if (groundedLF) {
-                    groundedLF = false;
-                    OnCrouchEvent.Invoke(false);
-                }
-            }
-
+        if (grounded || airControl) {
             // Calculate velocity caused by gravity
             gravVelocity = Vector3.Project(velocity, gravity);
 
             right = transform.right;
-            targetVelocity = gravVelocity + right * move * moveSpeed; //Velocity of player = velocity due to gravity plus orthogonal player input movement
+            targetVelocity = gravVelocity + right * move * baseMoveSpeed; //Velocity of player = velocity due to gravity plus orthogonal player input movement
 
             // Subtly smooth velocity to prevent jerkiness.
-            velocity = Vector3.SmoothDamp(velocity, targetVelocity, ref velocity, m_MovementSmoothing);
+            velocity = Vector3.SmoothDamp(velocity, targetVelocity, ref velocity, movementSmoothing);
 
             //FOOTSTEPS
             /******************************************************************/
@@ -247,24 +199,13 @@ public class CharacterController2D : Entity
 
         //JUMP CONTROL
         /******************************************************************/
-        if (grounded && jump && jumpCD.Check()) {
+        if (grounded && jumpDown && jumpCD.Check()) {
             grounded = false;
 
-            velocity = right * move * moveSpeed; // Zero out jump velocity
+            velocity = right * move * baseMoveSpeed; // Zero out jump velocity
             float jumpVelocity = Mathf.Sqrt(2.0f * Physics2D.gravity.magnitude * gravityMultiplier * maxJumpHeight);
-            if (multiplyJumpHeightByScale) {
-                if (transform.localScale.y > 0f) {
-                    jumpVelocity *= transform.localScale.y;
-                }
-            }
-            if (divideJumpHeightByMass) {
-                if (rb.mass > 0f) {
-                    jumpVelocity /= rb.mass;
-                }
-            }
-            velocity -= (Vector3)gravity.normalized * jumpVelocity;
 
-            numTimesJumped++;
+            velocity -= (Vector3)gravity.normalized * jumpVelocity;
 
             anim.SetTrigger("jump");
         }

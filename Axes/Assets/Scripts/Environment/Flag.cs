@@ -23,11 +23,6 @@ public class Flag : MonoBehaviour {
         float t = 0f;
         Vector3 startScale = trans.localScale;
 
-        //Disable all functions in active scene
-        foreach (FunctionManager item in FindObjectsOfType<FunctionManager>()) {
-            item.enabled = false;
-        }
-
         Vector3 refPos = Vector3.zero;
 
         while (t < maxDuration) {

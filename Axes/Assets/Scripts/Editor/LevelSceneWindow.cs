@@ -13,9 +13,6 @@ public class LevelSceneWindow : EditorWindow {
     private int world;
     private int level;
 
-    private Axis defaultX;
-    private Axis defaultY;
-
     [MenuItem("File/New Level Scene %&n", priority = 1)]
     public static void Init () {
         GetWindow(typeof(LevelSceneWindow));
@@ -24,8 +21,6 @@ public class LevelSceneWindow : EditorWindow {
     private void OnGUI () {
         world = EditorGUILayout.IntField("World", world);
         level = EditorGUILayout.IntField("Level", level);
-        // defaultX = (Axis)EditorGUILayout.EnumPopup("X Property", defaultX);
-        // defaultY = (Axis)EditorGUILayout.EnumPopup("Y Property", defaultY);
 
         if (GUILayout.Button("Create")) {
             CreateScene();
